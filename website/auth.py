@@ -22,6 +22,11 @@ def login():
         user = User.query.filter_by(email=email).first()
         # If user found with this email
         if user:
+            # If no password has been entered, have user try again
+            if len(password) < 1:
+                flash('Please enter your password.', category='error')
+                return render_template("login.html", user=current_user)
+
             # Check if password is correct
             if check_password_hash(user.password, password):
                 flash('Login Successful!', category='success')

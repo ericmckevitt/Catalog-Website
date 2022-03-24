@@ -12,6 +12,10 @@ class Course(db.Model):
     department = db.Column(db.String(4))
     # course number will be like '225' or '403'
     course_number = db.Column(db.String(3))
+    # course name
+    course_name = db.Column(db.String(500))
+    # credit hours TODO make this NUMERIC(2,1)
+    credit_hours = db.Column(db.String(10))
     # Foreign key relationship on user.id (1 user to Many courses relationship) (FK = lowercase 'user')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 

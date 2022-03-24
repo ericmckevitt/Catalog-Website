@@ -1,5 +1,10 @@
+:root {
+    --very-light-blue: #f5f6fb;
+    --darker-color: #e4e6f0;
+}
+
 body {
-    background-color: #f5f6fb;
+    background-color: var(--darker-color);
 }
 
 .navbar-title {
@@ -15,6 +20,10 @@ body {
 
 .nav-item-padding:hover {
     transition-duration: 400ms !important;
+}
+
+.margin-below-page {
+    margin-bottom: 80px;
 }
 
 /* For debugging */
@@ -47,6 +56,31 @@ body {
 .border-bottom {
     /* text-decoration: underline #515662; */
     border-bottom: #515662 1px solid;
+}
+
+span.x {
+    align-self: center;
+    justify-self: center;
+    margin: auto;
+}
+
+.courses-section {
+    padding: 22px;
+    border-radius: 12px;
+    background-color: var(--very-light-blue);
+}
+
+.courses-taken-list {
+    margin-top: 16px;
+}
+
+.courses-taken-column-names .row :not(:last-child) {
+    border-left: 1px solid #515662;
+}
+
+.courses-taken-column-names .row :first-child {
+    /* border-right: 1px solid #515662; */
+    border-left: none;
 }
 
 /* Medium Screens and Wider */

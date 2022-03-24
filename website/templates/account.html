@@ -1,23 +1,53 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content%}
+{% extends "base.html" %} {% block title %}Account{% endblock %} {% block
+content%}
 <br />
-<h1 style="text-align: center">This is the account page.</h1>
+<h1 style="text-align: center">Hi, {{user.first_name}} {{user.last_name}}.</h1>
 <br />
-<h3 style="text-align: center">Hi, {{user.first_name}} {{user.last_name}}.</h3>
-<br />
-<p>Notes for tomorrow:</p>
-<ul>
-    <li>Make a selector menu thing to select a major.</li>
-    <li>
-        Make a thing like the notes to add minors. (maybe do this for majors too
-        bc double majors)
+<!-- Display courses taken (if you've included any) -->
+{% if user.courses %}
+<h3 align="center">Courses Taken:</h3>
+{% endif %}
+<ul class="list-group list-group-flush" id="notes">
+    {% for course in user.courses %}
+    <li class="list-group-item">
+        {{course.department}}{{course.course_number}}
+        <button
+            type="button"
+            class="close"
+            onClick="deleteCourse({{ course.id }})"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
     </li>
-    <li>
-        Make a thing like the notes to add courses taken. Stores these in the
-        database
-    </li>
-    <li>
-        Look at DegreeWorks to see the general vibe of the website and emulate
-        that.
-    </li>
+    {% endfor %}
 </ul>
+<br />
+
+<!-- Form to add new courses -->
+<form method="POST">
+    <h3 align="center">Add a Course You've Taken:</h3>
+    <div class="form-group">
+        <label for="department">Department</label>
+        <input
+            type="text"
+            class="form-control"
+            id="department"
+            name="department"
+            placeholder="Enter the course's department (ex. CSCI)"
+        />
+    </div>
+    <div class="form-group">
+        <label for="course_number">Course Number</label>
+        <input
+            type="text"
+            class="form-control"
+            id="course_number"
+            name="course_number"
+            placeholder="Enter the course's course number (ex. 101)"
+        />
+    </div>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Add Course</button>
+    </div>
+</form>
 {% endblock %}

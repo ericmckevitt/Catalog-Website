@@ -5,6 +5,17 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 
 
+class Course(db.Model):
+    # Make id an integer which is the primary key
+    id = db.Column(db.Integer, primary_key=True)
+    # department will be like 'MATH' or 'CSCI'
+    department = db.Column(db.String(4))
+    # course number will be like '225' or '403'
+    course_number = db.Column(db.String(3))
+    # Foreign key relationship on user.id (1 user to Many courses relationship) (FK = lowercase 'user')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
 class User(db.Model, UserMixin):
     # Define table columns
 
@@ -20,3 +31,5 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150))
     # Last Name is String with max length of 150
     last_name = db.Column(db.String(150))
+    # Each time a course is added, add to courses list in courses field (relationship = capital 'Course')
+    courses = db.relationship('Course')

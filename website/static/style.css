@@ -44,6 +44,11 @@ body {
     justify-self: center;
 }
 
+.border-bottom {
+    /* text-decoration: underline #515662; */
+    border-bottom: #515662 1px solid;
+}
+
 /* Medium Screens and Wider */
 @media screen and (min-width: 576px) {
     #main-container {

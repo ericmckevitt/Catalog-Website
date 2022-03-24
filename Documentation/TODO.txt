@@ -1,0 +1,9 @@
+This document will monitor the sub-components of the project and their progress. 
+
+To Do: 
+    [x] Write script to connect to codd via Pyton script. 
+    [ ] Develop SQL queries and Python functions to answer business questions
+    [ ] Build a front-end application (most likely a website?)
+    [ ] Scrape/Collect data from Catalog
+    [ ] Write a README.txt 
+    ...

@@ -1,0 +1,7 @@
+INTEGER,TEXT,TEXT,TEXT,TEXT,TEXT
+cwid,first,last,major,minor,courses_taken
+12345678,Eric,McKevitt,Computer Science,Computational and Applied Mathematics,MATH111|CSM101|CHGN121|CSCI101|HASS100|PAGN|MATH112|PHGN100|EDNS151|CSCI261|PAGN|MATH213|PHGN200|CSCI274|CSCI262|EBGN201|MATH225|HASS200|CSCI306|MATH201|EBGN498|CSCI303|CSCI403|CSCI250
+23456789,Roman,Downie,Computer Science,Computational and Applied Mathematics,
+34567890,Isabelle,Goat,Civil Engineering,,
+45678900,Micah,Munoz,Computer Science,,
+56789000,Garrett,Gbagothy,Materials and Metallurgical Engineering,Explosives Engineering,

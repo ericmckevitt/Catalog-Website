@@ -1,132 +1,23 @@
-commit b9f1df0a7707362f83f016c7390619844a2b0925
+commit 981560a22b0f8e8a6b67a8bf2006ef4c89be0602
 Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Mon Mar 14 13:31:20 2022 -0600
+Date:   Thu Mar 24 17:39:08 2022 -0500
 
-    Added dummy content to index.html, style.css, script.js (Eric)
+    Working add courses section
 
-commit cdf213045d864105c9cff55e0a0fc741d1217fc3
+commit a6131d556a73e05d81bc7c815b9a223e3226e81a
 Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Mon Mar 14 13:11:42 2022 -0600
+Date:   Thu Mar 24 16:09:19 2022 -0500
 
-    Refactored architecture: src is now python, added index.html,css/style.css, and js folder. Mostly empty for the time being. (Eric)
+    User can now add/delete course and dep/CN is displayed
 
-commit 9d1b7d5fcc3c65523aba9ca1fa234f29414b47c9
+commit f20173d8158cc9a7f4b8ac08408e319f64f0ae83
 Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sun Mar 13 23:13:12 2022 -0600
+Date:   Thu Mar 24 15:13:01 2022 -0500
 
-    Created Documentation folder, changed name of main.py to codd.py as this acts more like a library of functions than an entry point to the program. (Eric)
+    Save before implementing account page functionality
 
-commit 3e42e1518387d47cbb4dfaf96f12220e85a1b447
+commit 2a3a7f6716d4d6fc5b0f3212bd9c56b2e12a7aed
 Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sun Mar 13 13:12:54 2022 -0600
+Date:   Thu Mar 24 00:25:26 2022 -0500
 
-    Introduced Brandon to team
-
-commit 94d12a778ba2cc23317217a5c17f847084e62160
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Thu Mar 10 00:03:26 2022 -0700
-
-    Touched up formatting in distance_to_minor() (Eric)
-
-commit addd67e9148bfb5aa92371a8c8c36c5a8ed204f7
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Wed Mar 9 23:58:47 2022 -0700
-
-    Developed distance to minor function (Eric)
-
-commit 820777bbce2d33769df2bd90bfddcef8373a71b8
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Tue Mar 8 14:55:51 2022 -0700
-
-    Added functions in process_students.py so that user can input their cwid and have the program automatically calculate which classes they still need to take to complete their major (Eric)
-
-commit d00f9a8eccd40ee1953a1dc311115676230b1eeb
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Tue Mar 8 12:13:30 2022 -0700
-
-    Added load_all_students.py and process_students.py, which allows us to look up a students major by cwid, or the classes they've taken by cwid (Eric)
-
-commit c932d12d6847e7ab5f57b3f4dadc368c8e930aa0
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Mon Mar 7 22:49:02 2022 -0700
-
-    Made new file to keep track of Students/Users, renamed cam_major to am_major and refactored references in code accordingly (Eric)
-
-commit fc4b17e31411530af7dc1da171495c1bc3de580e
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Mon Mar 7 21:04:41 2022 -0700
-
-    Created csv file with all CSCI courses and created python file to load and remove all courses from codd (Eric)
-
-commit 502c47e1c79f1eaa320d311ba06f0f2fab1f59d6
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sun Mar 6 17:29:08 2022 -0700
-
-    Made minor csv files for computer engineering, data science, and robotics (Eric)
-
-commit 475ca7b4168ceed321095ca9b2ed7ccd57e024b9
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 22:34:14 2022 -0700
-
-    Made Minor folder and made CSCIMinor csv files, Made Courses folder which is empty (Eric)
-
-commit fc5fece441f0ef7590f7ed380a24b24d92d942b9
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 21:45:24 2022 -0700
-
-    Refactored architecture to separate major, minor, and course csvs (Eric)
-
-commit cba8c9b57f2bee410c3aae0a83d2bf8c02095254
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 21:36:36 2022 -0700
-
-    Added STAT, CEEN, PHGN major csv files (Eric)
-
-commit 95f055d5491aa0eb9cfb1bb9d8ac58880d4a6fdb
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 18:50:12 2022 -0700
-
-    Added csv file for Computational & Applied Math Major, added script that will create and insert into tables for every major automatically. (Eric)
-
-commit b5374feb95b2edb8029e041820dfeb02c69f6db5
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 17:12:29 2022 -0700
-
-    Added script.py to isolate testing, added copy_table(), rename_table(), create_and_populate() in main.py, rendered csv to txt file, refactored dburi (Eric)
-
-commit aceb12ec9235c8b085301352a71db3af01b02d93
-Merge: 3b6f995 21d95ab
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 03:56:00 2022 -0700
-
-    Merge branch 'master' of https://github.com/ericmckevitt/CatalogDBM
-
-commit 3b6f9952c9820ade30db5157fcbced0a1cddb6fd
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 03:55:34 2022 -0700
-
-    Edited main function, removed local repo Jupyter
-
-commit 23eb315325b62490b031465d3728b0a80cef1f09
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 03:54:31 2022 -0700
-
-    Edited main function
-
-commit 21d95ab324140767cb1e6e0d51d579ac890a1d9c
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 03:45:02 2022 -0700
-
-    Delete Jupyter Checkpoint folder, not needed.
-
-commit bc76364f78aaeb092a73636afdd53ae813a9f26d
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 03:44:12 2022 -0700
-
-    Deleted Jupyter Notebook, shoudn't need this here.
-
-commit 0e44f0d4cf1a6bf32ac8d74f218c9ee26205f41a
-Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
-Date:   Sat Mar 5 03:41:45 2022 -0700
-
-    initial commit
+    Initial Commit - can login user and has basic account page

@@ -42,39 +42,51 @@ def account():
         department = request.form.get('department')
         course_number = request.form.get('course_number')
 
-        # Check for valid input
-        if len(department) != 4:
-            flash('Department name should be 4 digits.', category='error')
-        elif len(course_number) != 3:
-            flash('Course number should be 3 digits.', category='error')
-        else:
-            # If input is valid, try to look up the course name
-            course_lookup = department + course_number
-            try:
-                course_name = courses_temp[course_lookup][0]
-                credit_hours = courses_temp[course_lookup][1]
-            except KeyError:
-                flash('This is not a registered course in the system.',
-                      category='error')
-                return render_template("account.html", user=current_user)
-            # If course is not found in database, notify user and reload form
-            if course_name == None or credit_hours == None:
-                flash('This is not a registered course in the system.',
-                      category='error')
-                return render_template("account.html", user=current_user)
+        # If submitting a new course
+        if department and course_number:
+            # Check for valid input
+            if len(department) < 3:
+                flash('Department name is invalid.', category='error')
+            elif len(course_number) != 3:
+                flash('Course number should be 3 digits.', category='error')
+            else:
+                # If input is valid, try to look up the course name
+                course_lookup = department + course_number
+                try:
+                    course_name = courses_temp[course_lookup][0]
+                    credit_hours = courses_temp[course_lookup][1]
+                    # Increment credits taken by that course's number of credits
+                    current_user.credits_taken = str(
+                        float(current_user.credits_taken) + float(credit_hours))
+                    db.session.commit()
+                except KeyError:
+                    flash('This is not a registered course in the system.',
+                          category='error')
+                    return render_template("account.html", user=current_user)
+                # If course is not found in database, notify user and reload form
+                if course_name == None or credit_hours == None:
+                    flash('This is not a registered course in the system.',
+                          category='error')
+                    return render_template("account.html", user=current_user)
 
-            # try:
-            #     pass
-            #     # TODO I can't write this yet because I need to connect to codd which requires Mines WiFi
-            # except Exception:
-            #     print('Failed to load course name')
+                # try:
+                #     pass
+                #     # TODO I can't write this yet because I need to connect to codd which requires Mines WiFi
+                # except Exception:
+                #     print('Failed to load course name')
 
-            # Create Course row and add to database
-            new_course = Course(
-                department=department, course_number=course_number, course_name=course_name, credit_hours=credit_hours, user_id=current_user.id)
-            db.session.add(new_course)
+                # Create Course row and add to database
+                new_course = Course(
+                    department=department, course_number=course_number, course_name=course_name, credit_hours=credit_hours, user_id=current_user.id)
+                db.session.add(new_course)
+                db.session.commit()
+                flash('Course added!', category='success')
+
+        major = request.form.get('major')
+        if major:
+            current_user.major = major
             db.session.commit()
-            flash('Course added!', category='success')
+
     return render_template("account.html", user=current_user)
 
 
@@ -90,5 +102,13 @@ def delete_course():
         if course.user_id == current_user.id:
             db.session.delete(course)
             db.session.commit()
+    # Need to return something, so return empty data
+    return jsonify({})
+
+
+@views.route('/delete-major', methods=['POST'])
+def delete_major():
+    current_user.major = 'None'
+    db.session.commit()
     # Need to return something, so return empty data
     return jsonify({})

@@ -64,6 +64,13 @@ span.x {
     margin: auto;
 }
 
+.account-section {
+    padding: 22px;
+    border-radius: 12px;
+    background-color: var(--very-light-blue);
+    margin-bottom: 18px;
+}
+
 .courses-section {
     padding: 22px;
     border-radius: 12px;

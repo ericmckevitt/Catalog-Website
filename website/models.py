@@ -35,5 +35,9 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150))
     # Last Name is String with max length of 150
     last_name = db.Column(db.String(150))
+    # Major
+    major = db.Column(db.String(150))
+    # Credits taken TODO: Make this NUMERIC
+    credits_taken = db.Column(db.String(10))
     # Each time a course is added, add to courses list in courses field (relationship = capital 'Course')
     courses = db.relationship('Course')

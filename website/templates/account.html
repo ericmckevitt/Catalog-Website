@@ -3,6 +3,36 @@ content%}
 <br />
 <h1 style="text-align: center">Hi, {{user.first_name}} {{user.last_name}}.</h1>
 <br />
+
+<h2>Current major: {{ user.major }}</h2>
+<h2>Credit Hours Taken: {{user.credits_taken}}</h2>
+<br />
+
+<div class="account-section">
+    <!-- Major -->
+    <form method="POST">
+        <!-- Only display if Major has not been set yet -->
+        <h3 align="center">Set your Major:</h3>
+        <div class="form-group">
+            <label for="department">Major</label>
+            <input
+                type="text"
+                class="form-control"
+                id="major"
+                name="major"
+                placeholder="Enter your major"
+            />
+        </div>
+        <div align="center">
+            <button type="submit" class="btn btn-primary">Set Major</button>
+        </div>
+    </form>
+    <!-- Delete Major button -->
+    <button type="button" class="close" onClick="deleteMajor()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <section class="courses-section">
     <!-- Display courses taken (if you've included any) -->
     {% if user.courses %}

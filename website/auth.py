@@ -62,6 +62,8 @@ def sign_up():
         last_name = request.form.get('lastName')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
+        major = 'None'
+        credits_taken = '0.0'
 
         # Check if this user exists already
         user = User.query.filter_by(email=email).first()
@@ -85,7 +87,7 @@ def sign_up():
         else:
             # add user to database
             # Define the user and hash their password using sha256 hash function
-            new_user = User(cwid=cwid, email=email, first_name=first_name, last_name=last_name, password=generate_password_hash(
+            new_user = User(cwid=cwid, email=email, first_name=first_name, last_name=last_name, major=major, credits_taken=credits_taken, password=generate_password_hash(
                 password1, method='sha256'))
 
             # Add the user and commit changes

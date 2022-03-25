@@ -100,6 +100,14 @@ def delete_course():
     if course:
         # If this is the current user's note
         if course.user_id == current_user.id:
+            # Decrement credits_taken by this course's credits TODO Change this once I get codd connection
+            department = course.department
+            course_number = course.course_number
+            course_lookup = department + course_number
+            course_credits = courses_temp[course_lookup][1]
+            current_user.credits_taken = str(
+                float(current_user.credits_taken) - float(course_credits))
+
             db.session.delete(course)
             db.session.commit()
     # Need to return something, so return empty data

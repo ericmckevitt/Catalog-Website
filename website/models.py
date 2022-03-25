@@ -39,5 +39,7 @@ class User(db.Model, UserMixin):
     major = db.Column(db.String(150))
     # Credits taken TODO: Make this NUMERIC
     credits_taken = db.Column(db.String(10))
+    # Class standing
+    class_standing = db.Column(db.String(10))
     # Each time a course is added, add to courses list in courses field (relationship = capital 'Course')
     courses = db.relationship('Course')

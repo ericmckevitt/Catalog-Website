@@ -1,3 +1,4 @@
+from turtle import update
 from unicodedata import category
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
@@ -25,6 +26,20 @@ courses_temp = {
     'CSCI306': ['Software Engineering', 3.0],
 
 }
+
+
+def update_class_standing():
+    # Update class standing based on credits taken
+    if float(current_user.credits_taken) == 0:
+        current_user.class_standing = "None"
+    elif float(current_user.credits_taken) < 30:
+        current_user.class_standing = "Freshman"
+    elif float(current_user.credits_taken) >= 30 and float(current_user.credits_taken) < 60:
+        current_user.class_standing = "Sophomore"
+    elif float(current_user.credits_taken) >= 60 and float(current_user.credits_taken) < 90:
+        current_user.class_standing = "Junior"
+    else:
+        current_user.class_standing = "Senior"
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -58,6 +73,9 @@ def account():
                     # Increment credits taken by that course's number of credits
                     current_user.credits_taken = str(
                         float(current_user.credits_taken) + float(credit_hours))
+                    # Check if class standing has changed and update it
+                    update_class_standing()
+                    # Commit changes
                     db.session.commit()
                 except KeyError:
                     flash('This is not a registered course in the system.',
@@ -107,6 +125,9 @@ def delete_course():
             course_credits = courses_temp[course_lookup][1]
             current_user.credits_taken = str(
                 float(current_user.credits_taken) - float(course_credits))
+
+            # Check if class standing has changed and update it
+            update_class_standing()
 
             db.session.delete(course)
             db.session.commit()

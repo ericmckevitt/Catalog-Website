@@ -4,8 +4,18 @@ content%}
 <h1 style="text-align: center">Hi, {{user.first_name}} {{user.last_name}}.</h1>
 <br />
 
-<h2>Current major: {{ user.major }}</h2>
+<h2>
+    Current major: {{ user.major }}
+
+    <!-- Delete Major button (display only if major is set) -->
+    {% if user.major != 'None' %}
+    <button type="button" class="close" onClick="deleteMajor()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {% endif %}
+</h2>
 <h2>Credit Hours Taken: {{user.credits_taken}}</h2>
+<h2>Class Standing: {{ user.class_standing }}</h2>
 <br />
 
 <div class="account-section">
@@ -27,10 +37,6 @@ content%}
             <button type="submit" class="btn btn-primary">Set Major</button>
         </div>
     </form>
-    <!-- Delete Major button -->
-    <button type="button" class="close" onClick="deleteMajor()">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>
 
 <section class="courses-section">

@@ -10,6 +10,8 @@ DB_NAME = "database.db"
 
 
 def create_app():
+    DB_NAME = "database.db"
+
     app = Flask(__name__)
     # Encrypt cookie data for session
     app.config['SECRET_KEY'] = 'josiefnapwpawoj'

@@ -237,6 +237,7 @@ def copy_table(original, new_table, dburi=connect('Mines6515')):
 def rename_table(original, new_table, dburi=connect('Mines6515')):
     copy_table(original, new_table, dburi)
     drop(original, dburi)
+    # TODO: Only use this if we actually implement copy_table()
 
 
 # Save connection and inspector globally so that params can have default

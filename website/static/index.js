@@ -21,14 +21,14 @@ function deleteCourse(courseId) {
 
 /**
  * 
- * @param {*} noteId 
+ * @param {*} major 
  * 
  * Description: 
  * 
- * This function takes in the ID of a note
- * to be deleted, sends a POST request to an
- * endpoint called /delete-note, and reloads
- * the page. 
+ * This function takes in a major to be 
+ * deleted, sends a POST request to an
+ * endpoint called /delete-major, and 
+ * reloads the page. 
  */
 function deleteMajor(major) {
     fetch('/delete-major', {

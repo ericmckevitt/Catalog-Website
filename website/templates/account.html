@@ -1,9 +1,16 @@
 {% extends "base.html" %} {% block title %}Account{% endblock %} {% block
 content%}
+<!-- Description: -->
+<!-- Account page will collect all needed data on user, displaying only what is necessary for -->
+<!-- the user to verify that the information collected is correct. The heavy-duty data processing -->
+<!-- and functionality will go on another page (maybe the home page), but this will be the place  -->
+<!-- to configure your profile so that the home page or whatever can perform other functions -->
+
 <br />
 <h1 style="text-align: center">Hi, {{user.first_name}} {{user.last_name}}.</h1>
 <br />
 
+<!-- Debugging: Displaying data to make sure it is collected properly -->
 <h2>
     Current major: {{ user.major }}
 

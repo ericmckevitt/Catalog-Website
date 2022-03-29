@@ -63,7 +63,7 @@ def main():
     print(codd.get_tables(inspector))
     print()
 
-    shared_major_classes('ceen_major', 'phgn_major')
+    # shared_major_classes('ceen_major', 'phgn_major')
 
     # You can also script directly in main(), but it's good practice
     # to section off a script in a function if you can.

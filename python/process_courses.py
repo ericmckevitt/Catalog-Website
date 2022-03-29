@@ -16,7 +16,7 @@ dburi, inspector = codd.connect(password)
 # Pass in a department (Ex: CSCI) and get a list of classes
 
 
-def get_courses_by_departement(dep):
+def get_courses_by_department(dep):
     QUERY = f'''
     SELECT CONCAT(department, course_number) AS "courses" FROM {dep}_courses;
     '''
@@ -64,7 +64,7 @@ def parse_prereqs(prereqs):
 
 
 def main():
-    # courses = get_courses_by_departement('CSCI')
+    # courses = get_courses_by_department('CSCI')
     # print(courses)
 
     prereqs = get_course_prereqs('csci', 406)

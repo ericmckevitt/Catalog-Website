@@ -6,27 +6,36 @@ content%}
 <!-- and functionality will go on another page (maybe the home page), but this will be the place  -->
 <!-- to configure your profile so that the home page or whatever can perform other functions -->
 
-<br />
-<h1 style="text-align: center">Hi, {{user.first_name}} {{user.last_name}}.</h1>
-<br />
+<!-- Account Page Heading -->
+<h1 style="text-align: center; padding: 25px 0px">Account</h1>
 
-<!-- Debugging: Displaying data to make sure it is collected properly -->
-<h2>
-    Current major: {{ user.major }}
+<!-- Table with General Info -->
+<section class="account-table">
+    <ul class="list-group list-group-flush" id="notes">
+        <li class="list-group-item">
+            <strong>Name: </strong>{{user.first_name + " " + user.last_name}}
+        </li>
+        <li class="list-group-item"><strong>CWID: </strong>{{ user.cwid }}</li>
+        <li class="list-group-item">
+            <strong>Major: </strong>{{ user.major }}
+            <!-- Delete Major button (display only if major is set) -->
+            {% if user.major != 'None' %}
+            <button type="button" class="close" onClick="deleteMajor()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {% endif %}
+        </li>
+        <li class="list-group-item">
+            <strong>Credits Taken: </strong>{{ user.credits_taken }}
+        </li>
+        <li class="list-group-item">
+            <strong>Class Standing: </strong>{{ user.class_standing }}
+        </li>
+    </ul>
+</section>
 
-    <!-- Delete Major button (display only if major is set) -->
-    {% if user.major != 'None' %}
-    <button type="button" class="close" onClick="deleteMajor()">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    {% endif %}
-</h2>
-<h2>Credit Hours Taken: {{user.credits_taken}}</h2>
-<h2>Class Standing: {{ user.class_standing }}</h2>
-<br />
-
-<div class="account-section">
-    <!-- Set Major Form -->
+<!-- Set Major Form -->
+<section class="account-major-form-section">
     <form method="POST">
         <!-- Only display if Major has not been set yet -->
         <h3 align="center">Set your Major:</h3>
@@ -39,7 +48,7 @@ content%}
                 aria-label=".form-select-sm example"
                 size="1"
             >
-                <option selected>Select Your Major</option>
+                <option selected value="None">Select Your Major</option>
                 <option value="Computer Science">Computer Science</option>
                 <option value="Chemistry">Chemistry</option>
                 <option value="Civil Engineering">Civil Engineering</option>
@@ -50,7 +59,7 @@ content%}
             <button type="submit" class="btn btn-primary">Set Major</button>
         </div>
     </form>
-</div>
+</section>
 
 <section class="courses-section">
     <!-- Display courses taken (if you've included any) -->
@@ -123,6 +132,8 @@ content%}
         </div>
     </form>
 </section>
+
+<div class="margin-below-page"></div>
 
 <div class="margin-below-page"></div>
 

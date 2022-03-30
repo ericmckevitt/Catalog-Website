@@ -225,9 +225,9 @@ def main():
     classes = get_classes_taken_by_cwid(12345678)
     print(classes)
 
-    print(get_major_by_cwid(12345678))
+    # print(get_major_by_cwid(12345678))
 
-    # distance_to_minor(12345678, 'Robotics')
+    distance_to_minor(12345678, 'Computer Science')
     # distance_to_major(12345678, 'Statistics')
     print()
 

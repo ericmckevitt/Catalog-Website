@@ -43,7 +43,7 @@
 	"New Flash Message": {
 		"prefix": ":flash",
 		"body": [
-			"flash('$1', category='${2:success}')"
+			"flash('$1', category='${2|success,error|}')"
 		],
 		"description": "Creates a new flash message"
 	},

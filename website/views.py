@@ -6,6 +6,7 @@ from numpy import deprecate
 from .models import Course
 from . import db
 import json
+import python.codd as codd
 
 # Initialize blueprint called names
 views = Blueprint('views', __name__)
@@ -65,6 +66,14 @@ def account():
             elif len(course_number) != 3:
                 flash('Course number should be 3 digits.', category='error')
             else:
+                # Check to see if this course has already been added
+                for course in current_user.courses:
+                    # If this course has already been taken
+                    if department == course.department and course_number == course.course_number:
+                        flash('You have already added this course.',
+                              category='error')
+                        return render_template("account.html", user=current_user)
+
                 # If input is valid, try to look up the course name
                 course_lookup = department + course_number
                 try:
@@ -87,6 +96,7 @@ def account():
                           category='error')
                     return render_template("account.html", user=current_user)
 
+                # TODO: Look up class in codd database once we have more courses entered
                 # try:
                 #     pass
                 #     # TODO I can't write this yet because I need to connect to codd which requires Mines WiFi

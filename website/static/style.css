@@ -108,3 +108,11 @@ span.x {
         transition-duration: 300ms !important;
     }
 }
+
+@media screen and (min-width: 1200px) {
+    .set-major-form {
+        /* width: 65%;
+        margin: auto;
+        margin-bottom: 20px; */
+    }
+}

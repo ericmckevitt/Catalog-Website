@@ -26,19 +26,25 @@ content%}
 <br />
 
 <div class="account-section">
-    <!-- Major -->
+    <!-- Set Major Form -->
     <form method="POST">
         <!-- Only display if Major has not been set yet -->
         <h3 align="center">Set your Major:</h3>
-        <div class="form-group">
+        <div class="form-group set-major-form">
             <label for="department">Major</label>
-            <input
-                type="text"
-                class="form-control"
-                id="major"
+            <select
                 name="major"
-                placeholder="Enter your major"
-            />
+                id="major"
+                class="form-control form-control-sm"
+                aria-label=".form-select-sm example"
+                size="1"
+            >
+                <option selected>Select Your Major</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Physics">Engineering Physics</option>
+            </select>
         </div>
         <div align="center">
             <button type="submit" class="btn btn-primary">Set Major</button>

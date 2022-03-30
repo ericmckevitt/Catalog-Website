@@ -1,3 +1,39 @@
+commit 2ed37784caf9525016c94e74f500cfb69c5f3b15
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Mar 29 18:33:35 2022 -0600
+
+    Added Data Flow PDF (Eric)
+
+commit 435fd16549819cd78870214a3a69ea1b9dc5cbfc
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Mar 29 16:43:04 2022 -0600
+
+    Deleted js folder, no longer needed. (Eric)
+
+commit d11e4ff0633e2e37c5de7ede4e5a148f3c33ec0d
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Mar 29 15:02:23 2022 -0600
+
+    Small changes to database entries before meeting (Eric)
+
+commit 097f991e23524f6f931ffee192c2b61787bd945b
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Fri Mar 25 01:59:19 2022 -0500
+
+    Class standing feature implemented
+
+commit a8b9b09f05e593b873b002e732bf1ea03d891035
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Fri Mar 25 01:37:59 2022 -0500
+
+    Credits taken now is decremented appropriately when user deletes a course that they've taken
+
+commit 2f206e8984faf99321c03b798a796df07c39bc9f
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Fri Mar 25 01:31:35 2022 -0500
+
+    User can now add and remove major, DB also monitors credit hours but cannot yet remove hours when a course is removed
+
 commit 981560a22b0f8e8a6b67a8bf2006ef4c89be0602
 Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
 Date:   Thu Mar 24 17:39:08 2022 -0500

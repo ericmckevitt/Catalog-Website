@@ -1,0 +1,102 @@
+{
+	"New Codd Script": {
+		"prefix": ":newcodd",
+		"body": [
+			"import codd\n",
+			"# Collect credentials for user and server",
+			"username = codd.username",
+			"password = codd.getLoginCredentials()[1]",
+			"server = codd.server",
+			"database = codd.database",
+			"port = codd.port\n",
+			"# Connect to codd",
+			"dburi, inspector = codd.connect(password)\n",
+			"def main():",
+			"\t${1:pass}\n",
+			"if __name__ == \"__main__\":",
+			"\tmain()\n"
+		],
+		"description": "Writes the beginning of a new Codd Script"
+	},
+	"New Query": {
+		"prefix": ":query",
+		"body": [
+			"QUERY = f\"\"\"",
+			"$1",
+			"\"\"\"",
+			"answer = codd.read_query(QUERY, dburi)"
+			
+		],
+		"description": "Writes a new query template"
+	},
+	"New View": {
+		"prefix": ":view",
+		"body": [
+			"@${1:views}.route('/${2:}', methods=['GET'])",
+			"@login_required",
+			"def ${2:page}():",
+			"\t$3",
+			"\treturn render_template(\"${2:page}.html\", user=current_user)\n"
+		],
+		"description": "Creates a new view"
+	},
+	"New Flash Message": {
+		"prefix": ":flash",
+		"body": [
+			"flash('$1', category='${2:success}')"
+		],
+		"description": "Creates a new flash message"
+	},
+	"HTML-Flask if": {
+		"prefix": ":ifhtml",
+		"body": [
+			"{% if ${1:condition} %}",
+			"$TM_SELECTED_TEXT",
+			"{% endif %}"
+		],
+		"description": "Wraps the selected HTML text in a flask if-statement"
+	},
+	"HTML-Flask else": {
+		"prefix": ":elsehtml",
+		"body": [
+			"{% else %}"
+		],
+		"description": "Inserts a flask else-statement"
+	},
+	"CSS Class": {
+		"prefix": ":cls",
+		"body": [
+			".${1:name} {",
+			"\t$2",
+			"}"
+		],
+		"description": "Inserts a blank CSS class"
+	},
+	"Media Query Smaller Than": {
+		"prefix": ":mqsmallerthan",
+		"body": [
+			"@media screen and (max-width: ${1|576,768,992,1200|}px) {",
+			"\t$2",
+			"}"
+		],
+		"description": "Inserts a media query that takes effect for screen sizes smaller than some value"
+	},
+	"Media Query Larger Than": {
+		"prefix": ":mqlargerthan",
+		"body": [
+			"@media screen and (min-width: ${1|576,768,992,1200|}px) {",
+			"\t$2",
+			"}"
+		],
+		"description": "Inserts a media query that takes effect for screen sizes larger than some value"
+	},
+	"Media Query Between Widths": {
+		"prefix": ":mqbetween",
+		"body": [
+			"@media only screen and (max-width: ${1|576,768,992,1200|}px) and (min-width: ${2|576,768,992,1200|}px) {",
+			"\t$3",
+			"}"
+		],
+		"description": "Inserts a media query that takes effect for screen sizes between two pixel values"
+	},
+}

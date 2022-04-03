@@ -30,7 +30,7 @@ def load_all_students():
     # Print table list
     print('Original Table List:')
     print(codd.get_tables(insepctor),
-          end='\n-----------------------------------\n')
+        end='\n-----------------------------------\n')
     # Create tables and insert for each major
     for student in students:
         # Unpack file location and name from major

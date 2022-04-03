@@ -41,6 +41,18 @@ body {
     justify-items: center;
 }
 
+/* Login fix for verical alignment*/
+.login-form-container {
+    /* This is a hack fix and should probably not be used */
+    height: 50vh;
+}
+
+.login-form {
+    /* currently looks fine on desktop but kind of weird on phones */
+    height: 50%;
+    margin-top: 25%;
+}
+
 body {
     display: flex;
     flex-direction: column;

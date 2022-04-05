@@ -41,10 +41,10 @@ function deleteMajor(major) {
 }
 
 // implement deleteSemester function
-function deleteSemester(semester) {
+function deleteSemester(semester_id) {
     fetch('/delete-semester', {
         method: 'POST',
-        body: JSON.stringify({ semester: semester })
+        body: JSON.stringify({ semester_id: semester_id })
     }).then((_res) => {
         // Refresh page by redirecting to same page
         window.location.href = "/";

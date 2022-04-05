@@ -30,7 +30,7 @@ class Semester(db.Model):
     # make a user_id as foreign key
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     # make a semester_number
-    semester_number = db.Column(db.Integer, unique=True)
+    semester_number = db.Column(db.Integer)
     # make a list of courses as a relationship
     courses = db.relationship('Course')
 

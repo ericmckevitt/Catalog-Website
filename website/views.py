@@ -162,13 +162,30 @@ def delete_semester():
     # TODO: Imeplement semester deletion
     print('Delete Semester!')
 
+    semester_id = json.loads(request.data)['semester_id']
+    semester = Semester.query.get(semester_id)
+
+    # Remove this semester from the user's list of semesters
+    current_user.semesters.remove(semester)
+
+    # TODO: MAYBE: Delete all courses in this semester
+
+    # Change all other semester ids above this id to be one less
+    for s in current_user.semesters:
+        if s.semester_number > semester.semester_number:
+            s.semester_number -= 1
+            # db.session.commit()
+
+    db.session.delete(semester)
+    # decrement the user's semester count
+    current_user.num_semesters -= 1
+    db.session.commit()
+
     return jsonify({})
 
 
 @views.route('/add-semester', methods=['POST'])
 def add_semester():
-    # TODO: Implement semester adding
-
     # make a new semester
     # add it to the user's list of semesters
     new_semester = Semester(

@@ -2,7 +2,7 @@ from tabnanny import check
 from unicodedata import category
 from winreg import REG_QWORD
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
+from .models import User, Course, Semester
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -90,7 +90,7 @@ def sign_up():
             # Define the user and hash their password using sha256 hash function
             new_user = User(cwid=cwid, email=email, first_name=first_name, last_name=last_name, major=major,
                             credits_taken=credits_taken, class_standing=class_standing, password=generate_password_hash(
-                                password1, method='sha256'))
+                                password1, method='sha256'), num_semesters=0)
 
             # Add the user and commit changes
             db.session.add(new_user)

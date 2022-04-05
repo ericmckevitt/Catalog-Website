@@ -39,3 +39,25 @@ function deleteMajor(major) {
         window.location.href = "/account";
     })
 }
+
+// implement deleteSemester function
+function deleteSemester(semester) {
+    fetch('/delete-semester', {
+        method: 'POST',
+        body: JSON.stringify({ semester: semester })
+    }).then((_res) => {
+        // Refresh page by redirecting to same page
+        window.location.href = "/";
+    })
+}
+
+// implement addSemester function
+function addSemester(semester) {
+    fetch('/add-semester', {
+        method: 'POST',
+        body: JSON.stringify({})
+    }).then((_res) => {
+        // Refresh page by redirecting to same page
+        window.location.href = "/";
+    })
+}

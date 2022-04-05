@@ -3,7 +3,7 @@ from unicodedata import category
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
 from numpy import deprecate
-from .models import Course
+from .models import Course, Semester, User
 from . import db
 import json
 import python.codd as codd
@@ -46,6 +46,10 @@ def update_class_standing():
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+    # TODO: Implement semester building form
+    if request.method == 'POST':
+        print('Caught!')
+
     return render_template("home.html", user=current_user)
 
 
@@ -150,4 +154,33 @@ def delete_major():
     current_user.major = 'None'
     db.session.commit()
     # Need to return something, so return empty data
+    return jsonify({})
+
+
+@views.route('/delete-semester', methods=['POST'])
+def delete_semester():
+    # TODO: Imeplement semester deletion
+    print('Delete Semester!')
+
+    return jsonify({})
+
+
+@views.route('/add-semester', methods=['POST'])
+def add_semester():
+    # TODO: Implement semester adding
+
+    # make a new semester
+    # add it to the user's list of semesters
+    new_semester = Semester(
+        user_id=current_user.id,
+        semester_name=f'Semester {current_user.num_semesters + 1}',
+        semester_number=current_user.num_semesters + 1)
+    db.session.add(new_semester)
+    # add 1 to the users number of semesters
+    current_user.num_semesters += 1
+    db.session.commit()
+    flash('Semester Added!', category='success')
+
+    print('Add Semester!')
+
     return jsonify({})

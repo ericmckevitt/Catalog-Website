@@ -1,4 +1,36 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content%}
 <br />
 <h1 style="text-align: center">Welcome, {{user.first_name}}.</h1>
+
+<section class="semester-form-section">
+    <h3 align="center">Semesters</h3>
+    <ul class="list-group list-group-flush courses-taken-list" id="notes">
+        {% for semester in user.semesters %}
+
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-sm-2">
+                    Semester {{semester.semester_number}}
+                </div>
+
+                <div class="col-sm-1" align="center">
+                    <button
+                        type="button"
+                        class="close"
+                        onClick="deleteSemester({{ semester.id }})"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!--  Form to add new semester to user -->
+    <button type="button" class="btn btn-primary" onClick="addSemester()">
+        <span aria-hidden="true">Add Semester</span>
+    </button>
+</section>
+
 {% endblock %}

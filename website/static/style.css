@@ -84,6 +84,13 @@ span.x {
     margin-bottom: 18px;
 }
 
+.semester-form-section {
+    padding: 22px;
+    border-radius: 12px;
+    background-color: var(--very-light-blue);
+    margin-bottom: 18px;
+}
+
 .courses-taken-list {
     margin-top: 16px;
 }

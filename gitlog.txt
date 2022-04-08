@@ -1,3 +1,45 @@
+commit cad1e834abaa73dc6c620b87f4c162800647276f
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Thu Apr 7 22:09:13 2022 -0600
+
+    Semester Validation fully functional with example code.
+
+commit cb18744ba8b9cb1ab45b52b69a3373554cbae20f
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Thu Apr 7 19:19:40 2022 -0600
+
+    Schedule validation algorithm now supports prereqs/coreqs that allow options.
+
+commit e92cc001cd53e2cc5c5570504de6b97433a73fb8
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Thu Apr 7 18:38:12 2022 -0600
+
+    Implemented algorithm to validate semesters. Checks if prereqs and coreqs are satisfied.
+
+commit 2a1b7cdead168af3d50b2dff954a640a7c43bc58
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Wed Mar 30 02:00:57 2022 -0600
+
+    User can no longer add duplicate courses to their list of courses taken (Eric)
+
+commit 7407f7e3e7596b53023daadcf7667033ca173abf
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Wed Mar 30 01:12:30 2022 -0600
+
+    Account page now has a table at the top with general info (Eric)
+
+commit 07a6ed13faae540f3a966941a15f9616b96a4a05
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Wed Mar 30 00:54:43 2022 -0600
+
+    Set major section now uses a menu selector instead of a text field (Eric)
+
+commit c90248e880bc9507932fd6e87924dc367dcb934c
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Mar 29 22:54:30 2022 -0600
+
+    Wrote custom VSCode Snippets that will speed up coding. Check .vscode folder (Eric)
+
 commit 2ed37784caf9525016c94e74f500cfb69c5f3b15
 Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
 Date:   Tue Mar 29 18:33:35 2022 -0600

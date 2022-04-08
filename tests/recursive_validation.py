@@ -107,7 +107,10 @@ class Schedule:
                                 print(
                                     f"{course.get_name()} is not valid. You have not taken any of the following prerequisites:")
                                 for item in prerequisite:
-                                    print(f"\t{item.get_name()}")
+                                    if type(item) == str:
+                                        print(f"\t{item}")
+                                    else:
+                                        print(f"\t{item.get_name()}")
                                 return is_valid
                         else:
                             # check all previous semesters to find this course
@@ -118,8 +121,11 @@ class Schedule:
                             # if the prerequisite is not in the list of previous taken courses
                             if prerequisite not in previous_taken_courses:
                                 is_valid = False
-                                print(
-                                    f"{prerequisite.get_name()} is a prerequisite of {course.get_name()}")
+                                if type(prerequisite) == str:
+                                    print(f'\t{prerequisite}')
+                                else:
+                                    print(
+                                        f"{prerequisite.get_name()} is a prerequisite of {course.get_name()}")
                                 return is_valid
                 # If the course has corequisites
                 if course.get_corequisites() is not None:
@@ -199,7 +205,7 @@ eeng310 = Course('Information Systems Science I', 4.0, [
                  [eeng281, eeng282, phgn200], math225])
 eeng311 = Course('Information Systems Science II', 3.0, [eeng310])
 csci437 = Course('Introduction to Computer Vision', 3.0, [
-                 [math201, eeng311], math332, csci261, "*Senior level standing"])
+                 [math201, eeng311], math332, csci261])
 csci470 = Course('Machine Learning', 3.0, [math332, math201])
 csci400 = Course('Principles of Programming Languages', 3.0, [csci306])
 csci442 = Course('Operating Systems', 3.0, [csci262, csci274, csci341])
@@ -227,7 +233,10 @@ semester9 = Semester(
 semester10 = Semester(
     'Spring 2024', [csci442])
 
-schedule = Schedule([semester1, semester2, semester3, semester4, semester5])
+schedule = Schedule([semester1, semester2, semester3, semester4,
+                    semester5, semester6, semester7, semester8, semester9, semester10])
+
+print(schedule)
 
 # Test Schedule
 if schedule.validate_schedule():

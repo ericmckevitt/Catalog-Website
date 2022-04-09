@@ -11,7 +11,7 @@
         {% for semester in user.semesters %}
 
         <li class="list-group-item semester-row">
-            <div class="row">
+            <div class="row semester-title-row">
                 <div class="col" align="center">
                     Semester {{semester.semester_number}}
                     <button
@@ -23,9 +23,13 @@
                     </button>
                 </div>
             </div>
+            <!-- Add extra padding if there are courses for this semester -->
+            {% if semester.courses %}
+            <div class="padding-above-courses"></div>
+            {% endif %}
             <!-- For each course in the semester, render it as a row -->
             {% for course in semester.courses %}
-            <div class="row">
+            <div class="row semester-course-entry">
                 <div class="col-sm-2">
                     {{course.department}}{{course.course_number}}
                 </div>
@@ -153,5 +157,9 @@
         </div>
     </div>
 </div>
+
+<!-- Remove these later, just adding extra margin to the bottom of the page for better styling -->
+<div class="margin-below-page"></div>
+<div class="margin-below-page"></div>
 
 {% endblock %}

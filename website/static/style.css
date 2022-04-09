@@ -112,6 +112,27 @@ span.x {
     margin-top: 16px;
 }
 
+.semester-title-row {
+    /* padding-bottom: 12px !important; */
+    padding: 6px 0px;
+}
+
+.padding-above-courses {
+    margin-top: 10px;
+    border-bottom: 0.5px solid #515662;
+    margin-bottom: 10px;
+}
+
+/* .semester-title-row:after {
+    content: "";
+    height: 40px;
+} */
+
+
+.semester-course-entry {
+    margin-top: 8px;
+}
+
 /* Medium Screens and Wider */
 @media screen and (min-width: 576px) {
     #main-container {

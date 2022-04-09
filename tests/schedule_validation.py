@@ -77,6 +77,15 @@ class Schedule:
     def add_semester(self, semester):
         self.semesters.append(semester)
 
+    def get_semesters(self):
+        return self.semesters
+
+    def get_total_hours(self):
+        total_hours = 0
+        for semester in self.semesters:
+            total_hours += semester.get_total_hours()
+        return total_hours
+
     def validate_schedule(self):
         is_valid = True
         # Look at each semester

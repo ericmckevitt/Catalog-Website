@@ -119,7 +119,7 @@
                         <label for="department">Semester</label>
                         <select
                             name="semester"
-                            id="semeester"
+                            id="semester"
                             class="form-control form-control-sm"
                             aria-label=".form-select-sm example"
                             size="1"
@@ -135,19 +135,19 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <div class="modal-footer" style="margin: auto !important">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Add Course
+                        </button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                >
-                    Close
-                </button>
-                <button type="button" class="btn btn-primary">
-                    Add Course
-                </button>
             </div>
         </div>
     </div>

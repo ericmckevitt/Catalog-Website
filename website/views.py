@@ -49,6 +49,15 @@ def home():
     # TODO: Implement semester building form
     if request.method == 'POST':
         print('Caught!')
+        # Get information from new course form
+        department = request.form.get('department')
+        course_number = request.form.get('course_number')
+        semester = request.form.get('semester')
+        # Print to console
+        print(department)
+        print(course_number)
+        print(semester)
+        # TODO: Add new course to semester in database
 
     return render_template("home.html", user=current_user)
 
@@ -159,7 +168,6 @@ def delete_major():
 
 @views.route('/delete-semester', methods=['POST'])
 def delete_semester():
-    # TODO: Imeplement semester deletion
     print('Delete Semester!')
 
     semester_id = json.loads(request.data)['semester_id']
@@ -179,6 +187,11 @@ def delete_semester():
     db.session.delete(semester)
     # decrement the user's semester count
     current_user.num_semesters -= 1
+
+    # Update the semester name for each to match the new semester number
+    for s in current_user.semesters:
+        s.semester_name = 'Semester ' + str(s.semester_number)
+
     db.session.commit()
 
     return jsonify({})

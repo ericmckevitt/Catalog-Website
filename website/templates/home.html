@@ -7,13 +7,10 @@
     <ul class="list-group list-group-flush courses-taken-list" id="notes">
         {% for semester in user.semesters %}
 
-        <li class="list-group-item">
+        <li class="list-group-item semester-row">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col" align="center">
                     Semester {{semester.semester_number}}
-                </div>
-
-                <div class="col-sm-1" align="center">
                     <button
                         type="button"
                         class="close"
@@ -23,12 +20,35 @@
                     </button>
                 </div>
             </div>
+            <!-- For each course in the semester, render it as a row -->
+            {% for course in semester.courses %}
+            <div class="row">
+                <div class="col-sm-2">
+                    {{course.department}}{{course.course_number}}
+                </div>
+                <div class="col-md-7">{{course.course_name}}</div>
+                <div class="col-sm-2">{{course.credit_hours}}</div>
+                <div class="col-sm-1">
+                    <button
+                        type="button"
+                        class="close"
+                        onClick="deleteCourse({{ course.id }})"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
         </li>
         {% endfor %}
     </ul>
 
     <!--  Form to add new semester to user -->
-    <button type="button" class="btn btn-primary" onClick="addSemester()">
+    <button
+        type="button"
+        class="btn btn-primary add-semester-btn"
+        onClick="addSemester()"
+    >
         <span aria-hidden="true">Add Semester</span>
     </button>
 </section>

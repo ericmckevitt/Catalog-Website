@@ -104,6 +104,14 @@ span.x {
     border-left: none;
 }
 
+.add-semester-btn {
+    margin-top: 16px !important;
+}
+
+.semester-row {
+    margin-top: 16px;
+}
+
 /* Medium Screens and Wider */
 @media screen and (min-width: 576px) {
     #main-container {

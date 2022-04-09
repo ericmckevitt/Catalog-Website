@@ -1,7 +1,10 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content%}
 <br />
-<h1 style="text-align: center">Welcome, {{user.first_name}}.</h1>
+<h1 style="text-align: center; margin-bottom: 32px">
+    Welcome, {{user.first_name}}.
+</h1>
 
+<!-- Section to display all semesters -->
 <section class="semester-form-section">
     <h3 align="center">Semesters</h3>
     <ul class="list-group list-group-flush courses-taken-list" id="notes">
@@ -52,5 +55,102 @@
         <span aria-hidden="true">Add Semester</span>
     </button>
 </section>
+
+<!-- Button and Modal for Add Course to Semester -->
+<!-- Button trigger modal -->
+<button
+    type="button"
+    class="btn btn-primary"
+    data-toggle="modal"
+    data-target="#addCourseModal"
+>
+    Add Course to Semester
+</button>
+
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="addCourseModal"
+    tabindex="-1"
+    aria-labelledby="addCourseModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCourseModalLabel">
+                    Add Course to Semester
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- TODO: Change modal body background color so that it doesn't match the surrounding elements -->
+            <div class="modal-body">
+                <!-- Form to submit a new course to particular semester -->
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="department"
+                            name="department"
+                            placeholder="Enter the course's department (ex. CSCI)"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="course_number">Course Number</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="course_number"
+                            name="course_number"
+                            placeholder="Enter the course's course number (ex. 101)"
+                        />
+                    </div>
+                    <!-- Selector for semester -->
+                    <div class="form-group">
+                        <label for="department">Semester</label>
+                        <select
+                            name="semester"
+                            id="semeester"
+                            class="form-control form-control-sm"
+                            aria-label=".form-select-sm example"
+                            size="1"
+                        >
+                            <option selected value="None">
+                                Select a Semester
+                            </option>
+                            <!-- add an option for each semester -->
+                            {% for semester in user.semesters %}
+                            <option value="{{semester.id}}">
+                                Semester {{semester.semester_number}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Add Course
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

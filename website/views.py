@@ -52,12 +52,47 @@ def home():
         # Get information from new course form
         department = request.form.get('department')
         course_number = request.form.get('course_number')
-        semester = request.form.get('semester')
+        semester_id = request.form.get('semester')
         # Print to console
         print(department)
         print(course_number)
-        print(semester)
+        print(semester_id)
         # TODO: Add new course to semester in database
+
+        # Get a codd database connection
+        dburi, inspector = codd.connect('Mines6515')
+
+        # Use codd to get course info
+        course_info = codd.get_course_info(department, course_number, dburi)
+        print(course_info)
+
+        # extract data from course_info
+        course_found = True
+        course_name = ""
+        course_credits = ""
+        try:
+            course_name = course_info['course_name'].values[0].upper()
+            course_credits = str(course_info['credit_hours'].values[0])
+            if course_credits == None or course_credits == "None":
+                course_credits = ""
+        except:
+            flash('Course not found!', category='error')
+            course_found = False
+
+        print("course_name:", course_name, type(course_name))
+        print("course credits:", course_credits, type(course_credits))
+
+        # If data is None, flash a message
+        if department is None or course_number is None or semester_id is None:
+            flash('Please fill out all fields.')
+            return render_template('home.html')
+        if course_found:
+            # Create new course object
+            new_course = Course(department=department, course_number=course_number,
+                                course_name=course_name, credit_hours=course_credits, user_id=current_user.id, semester_id=semester_id)
+            # Add course to database
+            db.session.add(new_course)
+            db.session.commit()
 
     return render_template("home.html", user=current_user)
 
@@ -146,8 +181,12 @@ def delete_course():
             course_number = course.course_number
             course_lookup = department + course_number
             course_credits = courses_temp[course_lookup][1]
-            current_user.credits_taken = str(
-                float(current_user.credits_taken) - float(course_credits))
+            if current_user.credits_taken > 0:
+                current_user.credits_taken = str(
+                    float(current_user.credits_taken) - float(course_credits))
+
+            if current_user.credits_taken < 0:
+                current_user.credits_taken = 0
 
             # Check if class standing has changed and update it
             update_class_standing()

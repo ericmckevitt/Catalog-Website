@@ -239,6 +239,17 @@ def rename_table(original, new_table, dburi=connect('Mines6515')):
     drop(original, dburi)
     # TODO: Only use this if we actually implement copy_table()
 
+# Takes in DEP+CN and returns all information on this course as a dataframe
+
+
+def get_course_info(dep, cn, dburi):
+    # Query for course
+    query = f"SELECT * FROM {dep.lower()}_courses WHERE department = '{dep}' AND course_number = {int(cn)};"
+    # query = "SELECT * FROM csci_courses;"
+    print(query)
+    # Return result of query
+    return read_query(query, dburi)
+
 
 # Save connection and inspector globally so that params can have default
 dburi, inspector = connect('Mines6515')
@@ -259,6 +270,9 @@ def main():
     # Print list of tables
     # print('\nTables:', get_tables(inspector))
     # print()
+
+    course_info = get_course_info('CSCI', '406', dburi)
+    print(course_info)
 
 
 if __name__ == "__main__":

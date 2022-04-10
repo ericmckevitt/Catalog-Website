@@ -133,6 +133,42 @@ span.x {
     margin-top: 8px;
 }
 
+.edit-semester-name-row {
+    display: flex;
+    flex-direction: row;
+
+    /* Center all child elements */
+    align-items: center;
+    justify-content: center !important;
+
+
+    
+}
+
+.edit-semester-name-btn {
+    /* center button within parent */
+    align-self: center;
+    justify-self: center;
+    /* margin: auto !important; */
+
+    margin-top: 12px !important;
+    margin-bottom: 6px !important;
+    margin-right: 6px;
+    width: 150px; 
+}
+
+.delete-semester-btn {
+    /* center button within parent */
+    align-self: center;
+    justify-self: center;
+    /* margin: auto !important; */
+
+    margin-top: 12px !important;
+    margin-bottom: 6px !important;
+    margin-left: 6px;
+    width: 150px;
+}
+
 /* Medium Screens and Wider */
 @media screen and (min-width: 576px) {
     #main-container {

@@ -14,13 +14,6 @@
             <div class="row semester-title-row">
                 <div class="col" align="center">
                     Semester {{semester.semester_number}}
-                    <button
-                        type="button"
-                        class="close"
-                        onClick="deleteSemester({{ semester.id }})"
-                    >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
             </div>
             <!-- Add extra padding if there are courses for this semester -->
@@ -46,6 +39,27 @@
                 </div>
             </div>
             {% endfor %}
+            <!-- Button to edit semester name -->
+            <div class="row">
+                <div class="col-sm-12 edit-semester-name-row">
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary edit-semester-name-btn"
+                        data-toggle="modal"
+                        data-target="#addCourseModal"
+                    >
+                        Edit Name
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary add-semester-btn delete-semester-btn"
+                        onClick="deleteSemester({{ semester.id }})"
+                    >
+                        <span aria-hidden="true">Delete Semester</span>
+                    </button>
+                </div>
+            </div>
+
             <!-- If there is at least one course, display the semester's total credit hour count -->
         </li>
         {% endfor %}

@@ -32,7 +32,7 @@
                     <button
                         type="button"
                         class="close"
-                        onClick="deleteCourse({{ course.id }})"
+                        onClick="deleteCourseFromSemester({{ course.id }}, {{ semester.id }});"
                     >
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -46,7 +46,7 @@
                         type="button"
                         class="btn btn-outline-primary edit-semester-name-btn"
                         data-toggle="modal"
-                        data-target="#addCourseModal"
+                        data-target="#editSemesterNameModal"
                     >
                         Edit Name
                     </button>
@@ -86,7 +86,7 @@
     Add Course to Semester
 </button>
 
-<!-- Modal -->
+<!-- Add Course Modal -->
 <div
     class="modal fade"
     id="addCourseModal"
@@ -167,6 +167,45 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Semester Name Modal -->
+<div
+    class="modal fade"
+    id="editSemesterNameModal"
+    tabindex="-1"
+    aria-labelledby="editSemesterNameModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSemesterNameModalLabel">
+                    Edit Semester Name
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- TODO: Change modal body background color so that it doesn't match the surrounding elements -->
+            <div class="modal-body">...</div>
+            <div class="modal-footer" style="margin: auto !important">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </div>

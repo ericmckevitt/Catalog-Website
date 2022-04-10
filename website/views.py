@@ -197,6 +197,27 @@ def delete_course():
     return jsonify({})
 
 
+@views.route('/delete-course-from-semester', methods=['GET', 'POST'])
+@login_required
+def delete_course_from_semester():
+    if request.method == 'POST':
+        # Collect data from API call
+        course_id = json.loads(request.data)['course_id']
+        semester_id = json.loads(request.data)['semester_id']
+
+        # Delete this course from this semester
+        semester = Semester.query.get(semester_id)
+
+        # Delete this course from this semester
+        course = Course.query.get(course_id)
+        if course and semester:
+            # Delete this course from this semester
+            semester.courses.remove(course)
+            db.session.commit()
+
+    return jsonify({})
+
+
 @views.route('/delete-major', methods=['POST'])
 def delete_major():
     current_user.major = 'None'

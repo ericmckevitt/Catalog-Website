@@ -19,6 +19,17 @@ function deleteCourse(courseId) {
     })
 }
 
+function deleteCourseFromSemester(course_id, semester_id) {
+    console.log(course_id, semester_id);
+    fetch('/delete-course-from-semester', {
+        method: 'POST',
+        body: JSON.stringify({ course_id: course_id, semester_id: semester_id })
+    }).then((_res) => {
+        // Refresh page by redirecting to same page
+        window.location.href = "/";
+    })
+}
+
 /**
  * 
  * @param {*} major 

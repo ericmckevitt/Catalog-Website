@@ -125,11 +125,37 @@ def account():
                 # If input is valid, try to look up the course name
                 course_lookup = department + course_number
                 try:
-                    course_name = courses_temp[course_lookup][0]
-                    credit_hours = courses_temp[course_lookup][1]
+                    # Look up course information from codd
+                    dburi, inspector = codd.connect('Mines6515')
+                    course_info = codd.get_course_info(
+                        department, course_number, dburi)
+
+                    # extract data from course_info
+                    course_found = True
+                    course_name = ""
+                    course_credits = ""
+                    try:
+                        course_name = course_info['course_name'].values[0].upper(
+                        )
+                        course_credits = str(
+                            course_info['credit_hours'].values[0])
+                        if course_credits == None or course_credits == "None":
+                            course_credits = ""
+                    except:
+                        flash('Course not found!', category='error')
+                        course_found = False
+
+                    print(course_name)
+                    print(course_credits)
+
+                    # course_name = courses_temp[course_lookup][0]
+                    # credit_hours = courses_temp[course_lookup][1]
                     # Increment credits taken by that course's number of credits
-                    current_user.credits_taken = str(
-                        float(current_user.credits_taken) + float(credit_hours))
+                    try:
+                        current_user.credits_taken = str(
+                            float(current_user.credits_taken) + float(course_credits))
+                    except:
+                        flash('Course not found!', category='error')
                     # Check if class standing has changed and update it
                     update_class_standing()
                     # Commit changes
@@ -139,7 +165,7 @@ def account():
                           category='error')
                     return render_template("account.html", user=current_user)
                 # If course is not found in database, notify user and reload form
-                if course_name == None or credit_hours == None:
+                if course_name == None or course_credits == None:
                     flash('This is not a registered course in the system.',
                           category='error')
                     return render_template("account.html", user=current_user)
@@ -153,7 +179,7 @@ def account():
 
                 # Create Course row and add to database
                 new_course = Course(
-                    department=department, course_number=course_number, course_name=course_name, credit_hours=credit_hours, user_id=current_user.id)
+                    department=department, course_number=course_number, course_name=course_name, credit_hours=course_credits, user_id=current_user.id)
                 db.session.add(new_course)
                 db.session.commit()
                 flash('Course added!', category='success')

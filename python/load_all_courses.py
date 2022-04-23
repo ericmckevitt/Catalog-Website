@@ -17,11 +17,13 @@ dburi, insepctor = codd.connect(password)
 # Define table locations for convenience
 csci_courses = './Schema/Courses/CSCICourses.csv'
 eeng_courses = './Schema/Courses/EENGCourses.csv'
+all_courses = './Schema/Courses/all_courses.csv'
+
 # csci_courses = '../Schema/Courses/CSCICourses.csv'
 
 
 # majors = [ [location, name], ... ]
-courses = [[csci_courses, 'csci_courses'], [eeng_courses, 'eeng_courses']]
+courses = [[all_courses, 'all_courses']]
 
 
 def drop_all_courses():

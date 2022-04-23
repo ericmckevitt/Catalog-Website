@@ -219,7 +219,6 @@ csci470 = Course('Machine Learning', 3.0, [math332, math201])
 csci400 = Course('Principles of Programming Languages', 3.0, [csci306])
 csci442 = Course('Operating Systems', 3.0, [csci262, csci274, csci341])
 
-
 # make semesters
 semester1 = Semester(
     'Fall 2020', [math111, csm101, edns151, hass100, pagn_elective, csci101])
@@ -228,7 +227,7 @@ semester2 = Semester(
 semester3 = Semester(
     'Summer 2021', [csci262, ebgn201])
 semester4 = Semester(
-    'Fall 2021', [chgn121, csci274, hass200, math213, phgn200])
+    'Fall 2021', [chgn121, csci274, hass200, math213])
 semester5 = Semester(
     'Spring 2022', [csci250, csci306, csci403, math201, math225, pagn_elective])
 semester6 = Semester(

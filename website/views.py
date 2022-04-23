@@ -7,6 +7,7 @@ from .models import Course, Semester, User
 from . import db
 import json
 import python.codd as codd
+import python.load_all_majors as maj
 
 # Initialize blueprint called names
 views = Blueprint('views', __name__)
@@ -41,6 +42,23 @@ def update_class_standing():
         current_user.class_standing = "Junior"
     else:
         current_user.class_standing = "Senior"
+
+
+def compute_degree_progress():
+    # figure out how many credits are in the current major
+    major = current_user.major
+    major = maj.major_map[major]
+    query = f"""
+        SELECT SUM(credit_hours) FROM {major}_major;
+    """
+    dburi, inspector = codd.connect('Mines6515')
+    major_credits = codd.read_query(query, dburi)
+    major_credits = major_credits['sum'].values[0]
+    print(major_credits)
+    user_credits = current_user.credits_taken
+    percent = user_credits/major_credits * 100
+    print('percentage completion:', percent)
+    return percent
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -158,6 +176,7 @@ def account():
                         flash('Course not found!', category='error')
                     # Check if class standing has changed and update it
                     update_class_standing()
+                    degree_progress = compute_degree_progress()
                     # Commit changes
                     db.session.commit()
                 except KeyError:

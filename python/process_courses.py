@@ -30,13 +30,16 @@ def get_course_prereqs(dep, cn):
     # Transforms inputs from csci, 403 to CSCI403
     course = f'{dep.upper()}{cn}'
     QUERY = f'''
-    SELECT prerequisites FROM {dep}_courses WHERE CONCAT(department, course_number) = '{course}';
+    SELECT prerequisites FROM all_courses WHERE CONCAT(department, course_number) = '{course}';
     '''
 
     # Stores the return data as a string, still need to process logic
     prereqs = codd.read_query(QUERY, dburi)['prerequisites'].values[0]
 
     # Split along &
+    if prereqs is None:
+        return None
+
     prereqs = prereqs.split('&')
 
     # Remove parenthesis from each element now that it's split
@@ -47,6 +50,8 @@ def get_course_prereqs(dep, cn):
         # Split along |
         if '|' in prereqs[i]:
             prereqs[i] = prereqs[i].split('|')
+    if prereqs == ['NULL']:
+        prereqs = None
 
     return prereqs
 
@@ -54,6 +59,10 @@ def get_course_prereqs(dep, cn):
 
 
 def parse_prereqs(prereqs):
+    print(prereqs)
+    if prereqs is None or prereqs == []:
+        print('No prereqs')
+        return
     for prereq in prereqs:
         if type(prereq) == str:
             print(prereq)
@@ -67,7 +76,7 @@ def main():
     # courses = get_courses_by_department('CSCI')
     # print(courses)
 
-    prereqs = get_course_prereqs('csci', 406)
+    prereqs = get_course_prereqs('csm', 101)
     print(prereqs)
     print()
     parse_prereqs(prereqs)

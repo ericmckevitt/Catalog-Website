@@ -133,6 +133,10 @@ class Schedule:
                             if prerequisite not in previous_taken_courses:
                                 is_valid = False
                                 if type(prerequisite) == str:
+
+                                    print(
+                                        course.get_name() + " is not valid. You have not taken " + prerequisite)
+
                                     print(f'\t{prerequisite}')
                                 else:
                                     print(
@@ -177,33 +181,25 @@ class Schedule:
 
 def test_schedule_validation():
     # Expected data for each course: department, course number, name, hours
-    math111 = Course('Calculus I', 4.0, pc.get_course_prereqs('math', 111))
-    math112 = Course('Calculus II', 4.0, pc.get_course_prereqs('math', 112))
-    math213 = Course('Calculus III', 4.0, pc.get_course_prereqs('math', 213))
-    csm101 = Course('Freshman Success Seminar', 0.5,
-                    pc.get_course_prereqs('csm', 101))
-
-    csci101 = Course('Introduction to Computer Science',
-                     3.0, pc.get_course_prereqs('csci', 101))
-    csci261 = Course('Programming Concepts', 3.0,
-                     pc.get_course_prereqs('csci', 261))
-    hass100 = Course('Nature and Human Values', 4.0,
-                     pc.get_course_prereqs('hass', 100))
-    chgn121 = Course('Principles of Chemistry I', 4.0,
-                     pc.get_course_prereqs('chgn', 121))
-    hass200 = Course('Global Studies', 3.0, pc.get_course_prereqs('hass', 200))
-
+    math111 = Course('Calculus I', 4.0, pc.get_course_prereqs('MATH', 111))
+    math112 = Course('Calculus II', 4.0, pc.get_course_prereqs('MATH', 112))
+    hass100 = Course('Nature and Human Values', 3.0,
+                     pc.get_course_prereqs('HASS', 100))
+    phgn100 = Course('Physics I', 4.5, pc.get_course_prereqs('PHGN', 100))
     print(math111)
-    print(math112)
+    print('Calc2 Prereq:', math112.get_prerequisites())
+    # print(math112)
 
-    semester1 = Semester('Fall 2020', [math111, csm101, csci101, hass100])
-    semester2 = Semester('Spring 2021', [math112, chgn121, csci261, hass200])
+    semester1 = Semester('Fall 2020', [math111, hass100])
+    semester2 = Semester('Spring 2021', [math112, phgn100])
+    # semester2 = Semester('Spring 2021', [chgn121, csci261, hass200])
 
     schedule = Schedule([semester1, semester2])
 
     print(schedule.validate_schedule())
 
     # print(math111)
+
 
     # Make courses
 math111 = Course('Calculus I', 4.0)
@@ -254,29 +250,29 @@ csci400 = Course('Principles of Programming Languages', 3.0, [csci306])
 csci442 = Course('Operating Systems', 3.0, [csci262, csci274, csci341])
 
 # make semesters
-# semester1 = Semester(
-#     'Fall 2020', [math111, csm101, edns151, hass100, pagn_elective, csci101])
-# semester2 = Semester(
-#     'Spring 2021', [math112, phgn100, csci261, csci303, ebgn498])
-# semester3 = Semester(
-#     'Summer 2021', [csci262, ebgn201])
-# semester4 = Semester(
-#     'Fall 2021', [chgn121, csci274, hass200, math213])
-# semester5 = Semester(
-#     'Spring 2022', [csci250, csci306, csci403, math201, math225, pagn_elective])
-# semester6 = Semester(
-#     'Fall 2022', [csci341, csci358, eeng281, math307, math332, pagn_elective])
-# semester7 = Semester(
-#     'Spring 2023', [csci404, csci473, eeng307, megn441, csci406, pagn_elective])
-# semester8 = Semester(
-#     'Summer 2023', [csci370])
-# semester9 = Semester(
-#     'Fall 2023', [csci437, csci470, csci400])
-# semester10 = Semester(
-#     'Spring 2024', [csci442])
+semester1 = Semester(
+    'Fall 2020', [math111, csm101, edns151, hass100, pagn_elective, csci101])
+semester2 = Semester(
+    'Spring 2021', [math112, phgn100, csci261, csci303, ebgn498])
+semester3 = Semester(
+    'Summer 2021', [csci262, ebgn201])
+semester4 = Semester(
+    'Fall 2021', [chgn121, csci274, hass200, math213, phgn200])
+semester5 = Semester(
+    'Spring 2022', [csci250, csci306, csci403, math201, math225, pagn_elective])
+semester6 = Semester(
+    'Fall 2022', [csci341, csci358, eeng281, math307, math332, pagn_elective])
+semester7 = Semester(
+    'Spring 2023', [csci404, csci473, eeng307, megn441, csci406, pagn_elective])
+semester8 = Semester(
+    'Summer 2023', [csci370])
+semester9 = Semester(
+    'Fall 2023', [csci437, csci470, csci400])
+semester10 = Semester(
+    'Spring 2024', [csci442])
 
-# schedule = Schedule([semester1, semester2, semester3, semester4,
-# semester5, semester6, semester7, semester8, semester9, semester10])
+schedule = Schedule([semester1, semester2, semester3, semester4,
+                     semester5, semester6, semester7, semester8, semester9, semester10])
 
 # print(schedule)
 

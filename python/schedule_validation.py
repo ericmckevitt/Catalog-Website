@@ -2,11 +2,13 @@ import process_courses as pc
 
 
 class Course:
-    def __init__(self, name, hours=0.0, prerequisites=None, corequisites=None):
+    def __init__(self, name, department, course_number, hours=0.0, prerequisites=None, corequisites=None):
         self.name = name
         self.prerequisites = prerequisites
         self.corequisites = corequisites
         self.hours = hours
+        self.department = department
+        self.course_number = course_number
 
     def set_prerequisites(self, prerequisites):
         self.prerequisites = prerequisites
@@ -36,6 +38,9 @@ class Course:
 
     def get_corequisites(self):
         return self.corequisites
+
+    def get_dep_cn(self):
+        return str(self.department) + str(self.course_number)
 
 
 class Semester:
@@ -113,6 +118,18 @@ class Schedule:
                                 # add courses from previous semesters to list
                                 previous_taken_courses += previous_semester.get_courses()
                             # If none of the items in the prerequisite list are in the previous taken courses
+                            # print('Item:', prerequisite[0], '\t', type(
+                            #     prerequisite[0]))
+                            # print('Previous taken courses:',
+                            #       previous_taken_courses)
+
+                            # Check if the course is in the previous taken courses by checking the name of each course
+                            # if not any(course.get_dep_cn().strip() == previous_course for previous_course in
+                            #            previous_taken_courses):
+                            #     print('FLAG:', course.get_dep_cn(),
+                            #           '\t', prerequisite)
+
+                            # TODO: BUG HERE: Comparing wrong types so it doesn't make it into this if statement
                             if not any(item in previous_taken_courses for item in prerequisite):
                                 is_valid = False
                                 print(
@@ -123,25 +140,40 @@ class Schedule:
                                     else:
                                         print(f"\t{item.get_name()}")
                                 return is_valid
-                        else:
+
+                        else:  # type == str
                             # check all previous semesters to find this course
                             previous_taken_courses = []
                             for previous_semester in self.semesters[:semester_number]:
                                 # add courses from previous semesters to list
                                 previous_taken_courses += previous_semester.get_courses()
                             # if the prerequisite is not in the list of previous taken courses
-                            if prerequisite not in previous_taken_courses:
+
+                            # Check to see if the prerequisite is in the list of previous taken courses
+                            foundCourse = False
+                            for previous_course in previous_taken_courses:
+                                if previous_course.get_dep_cn().strip() == prerequisite.strip():
+                                    foundCourse = True
+                                    break
+
+                            if not foundCourse:
                                 is_valid = False
-                                if type(prerequisite) == str:
-
-                                    print(
-                                        course.get_name() + " is not valid. You have not taken " + prerequisite)
-
-                                    print(f'\t{prerequisite}')
-                                else:
-                                    print(
-                                        f"{prerequisite.get_name()} is a prerequisite of {course.get_name()}")
+                                print(
+                                    f"{course.get_name()} is not valid. You have not taken {prerequisite}.")
                                 return is_valid
+
+                            # if prerequisite not in previous_taken_courses:
+                            #     is_valid = False
+                            #     if type(prerequisite) == str:
+
+                            #         print(
+                            #             course.get_name() + " is not valid. You have not taken " + prerequisite)
+
+                            #         print(f'\t{prerequisite}')
+                            #     else:
+                            #         print(
+                            #             f"{prerequisite.get_name()} is a prerequisite of {course.get_name()}")
+                            #     return is_valid
                 # If the course has corequisites
                 if course.get_corequisites() is not None:
                     # for each corequisite in the course
@@ -181,98 +213,130 @@ class Schedule:
 
 def test_schedule_validation():
     # Expected data for each course: department, course number, name, hours
-    math111 = Course('Calculus I', 4.0, pc.get_course_prereqs('MATH', 111))
-    math112 = Course('Calculus II', 4.0, pc.get_course_prereqs('MATH', 112))
-    hass100 = Course('Nature and Human Values', 3.0,
+    math111 = Course('Calculus I', 'MATH', '111', 4.0,
+                     pc.get_course_prereqs('MATH', 111))
+    math112 = Course('Calculus II', 'MATH', '112', 4.0,
+                     pc.get_course_prereqs('MATH', 112))
+    hass100 = Course('Nature and Human Values', 'HASS', '100', 3.0,
                      pc.get_course_prereqs('HASS', 100))
-    phgn100 = Course('Physics I', 4.5, pc.get_course_prereqs('PHGN', 100))
-    print(math111)
-    print('Calc2 Prereq:', math112.get_prerequisites())
-    # print(math112)
+    phgn100 = Course('Physics I', 'PHGN', '100', 4.5,
+                     pc.get_course_prereqs('PHGN', 100))
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSM', 101)
+    csm101 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CHGN', 121)
+    chgn121 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 101)
+    csci101 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('EDNS', 151)
+    edns151 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 261)
+    csci261 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('MATH', 213)
+    math213 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('PHGN', 200)
+    phgn200 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 274)
+    csci274 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 262)
+    csci262 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('EBGN', 201)
+    ebgn201 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('MATH', 225)
+    math225 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 358)
+    csci358 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 341)
+    csci341 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('HASS', 200)
+    hass200 = Course(name, dept, cn, hours, prereqs, coreqs)
 
-    semester1 = Semester('Fall 2020', [math111, hass100])
-    semester2 = Semester('Spring 2021', [math112, phgn100])
+    semester1 = Semester(
+        'Fall 2020', [math111, hass100, chgn121, csci101, csm101])
+    semester2 = Semester('Spring 2021', [math112, phgn100, edns151, csci261])
+    semester3 = Semester(
+        'Fall 2021', [math213, phgn200, csci274, csci262, ebgn201])
+    semester4 = Semester('Spring 2022', [math225, csci358, csci341, hass200])
     # semester2 = Semester('Spring 2021', [chgn121, csci261, hass200])
 
-    schedule = Schedule([semester1, semester2])
+    schedule = Schedule([semester1, semester2, semester3, semester4])
 
     print(schedule.validate_schedule())
 
     # print(math111)
 
 
-    # Make courses
-math111 = Course('Calculus I', 4.0)
-math112 = Course('Calculus II', 4.0, [math111])
-math213 = Course('Calculus III', 4.0, [math112])
-csm101 = Course('Freshman Success Seminar', 0.5)
-chgn121 = Course('Chemistry I', 4.0)
-csci101 = Course('Introduction to Computer Science', 3.0)
-hass100 = Course('Nature and Human Values', 4.0)
-pagn_elective = Course('Physical Activity Course', 0.5)
-phgn100 = Course('Physics I', 4.5, [math111], [math112])
-edns151 = Course('Design 1', 3.0)
-csci261 = Course('Programming Concepts', 3.0)
-csci303 = Course('Data Science', 3.0, [[csci101, csci261]])
-ebgn498 = Course('InnovateX', 3.0)
-csci262 = Course('Data Structures', 3.0, [csci261])
-ebgn201 = Course('Principles of Economics', 3.0)
-csci274 = Course('Introduction to the Linux Operating System', 1.0, [csci261])
-hass200 = Course('Global Studies', 3.0, [hass100])
-phgn200 = Course('Physics II', 4.5, [phgn100], [math213])
-csci250 = Course('Building a Sensor System', 3.0,
-                 prerequisites=None, corequisites=[math213, phgn200])
-csci306 = Course('Software Engineering', 3.0, [csci262])
-csci403 = Course('Database Management', 3.0, [csci262])
-math201 = Course('Probability & Statistics', 3.0, [math112])
-math225 = Course('Differential Equations', 3.0, [math112], [math213])
-csci341 = Course('Computer Organization', 3.0, [csci261], [csci262])
-csci358 = Course('Discrete Mathematics', 3.0, [math213])
-eeng281 = Course('Intro to Circuits', 3.0, [phgn200])
-math307 = Course('Intro to Scientifc Computing', 3.0, [math213], [math225])
-math332 = Course('Linear Algebra', 3.0, [math213])
-csci404 = Course('Artificial Intelligence', 3.0, [csci262])
-csci473 = Course('Human-Centered Robotics', 3.0, [csci262, math201])
-eeng282 = Course('Electric Circuits', 4.0, [phgn200])
-phgn215 = Course('Analog Electronics', 4.0, [phgn200])
-megn441 = Course('Introduction to Robotics', 3.0, [
-                 csci261, [eeng281, eeng282, phgn215]])
-eeng307 = Course('Introduction to Feedback Control Systems', 3.0, [eeng281])
-csci406 = Course('Algorithms', 3.0, [csci262, csci358, math213])
-csci370 = Course('Advanced Software Engineering', 4.5, [csci306])
-eeng310 = Course('Information Systems Science I', 4.0, [
-                 [eeng281, eeng282, phgn200], math225])
-eeng311 = Course('Information Systems Science II', 3.0, [eeng310])
-csci437 = Course('Introduction to Computer Vision', 3.0, [
-                 [math201, eeng311], math332, csci261])
-csci470 = Course('Machine Learning', 3.0, [math332, math201])
-csci400 = Course('Principles of Programming Languages', 3.0, [csci306])
-csci442 = Course('Operating Systems', 3.0, [csci262, csci274, csci341])
+# Make courses
+# math111 = Course('Calculus I', 4.0)
+# math112 = Course('Calculus II', 4.0, [math111])
+# math213 = Course('Calculus III', 4.0, [math112])
+# csm101 = Course('Freshman Success Seminar', 0.5)
+# chgn121 = Course('Chemistry I', 4.0)
+# csci101 = Course('Introduction to Computer Science', 3.0)
+# hass100 = Course('Nature and Human Values', 4.0)
+# pagn_elective = Course('Physical Activity Course', 0.5)
+# phgn100 = Course('Physics I', 4.5, [math111], [math112])
+# edns151 = Course('Design 1', 3.0)
+# csci261 = Course('Programming Concepts', 3.0)
+# csci303 = Course('Data Science', 3.0, [[csci101, csci261]])
+# ebgn498 = Course('InnovateX', 3.0)
+# csci262 = Course('Data Structures', 3.0, [csci261])
+# ebgn201 = Course('Principles of Economics', 3.0)
+# csci274 = Course('Introduction to the Linux Operating System', 1.0, [csci261])
+# hass200 = Course('Global Studies', 3.0, [hass100])
+# phgn200 = Course('Physics II', 4.5, [phgn100], [math213])
+# csci250 = Course('Building a Sensor System', 3.0,
+#                  prerequisites=None, corequisites=[math213, phgn200])
+# csci306 = Course('Software Engineering', 3.0, [csci262])
+# csci403 = Course('Database Management', 3.0, [csci262])
+# math201 = Course('Probability & Statistics', 3.0, [math112])
+# math225 = Course('Differential Equations', 3.0, [math112], [math213])
+# csci341 = Course('Computer Organization', 3.0, [csci261], [csci262])
+# csci358 = Course('Discrete Mathematics', 3.0, [math213])
+# eeng281 = Course('Intro to Circuits', 3.0, [phgn200])
+# math307 = Course('Intro to Scientifc Computing', 3.0, [math213], [math225])
+# math332 = Course('Linear Algebra', 3.0, [math213])
+# csci404 = Course('Artificial Intelligence', 3.0, [csci262])
+# csci473 = Course('Human-Centered Robotics', 3.0, [csci262, math201])
+# eeng282 = Course('Electric Circuits', 4.0, [phgn200])
+# phgn215 = Course('Analog Electronics', 4.0, [phgn200])
+# megn441 = Course('Introduction to Robotics', 3.0, [
+#                  csci261, [eeng281, eeng282, phgn215]])
+# eeng307 = Course('Introduction to Feedback Control Systems', 3.0, [eeng281])
+# csci406 = Course('Algorithms', 3.0, [csci262, csci358, math213])
+# csci370 = Course('Advanced Software Engineering', 4.5, [csci306])
+# eeng310 = Course('Information Systems Science I', 4.0, [
+#                  [eeng281, eeng282, phgn200], math225])
+# eeng311 = Course('Information Systems Science II', 3.0, [eeng310])
+# csci437 = Course('Introduction to Computer Vision', 3.0, [
+#                  [math201, eeng311], math332, csci261])
+# csci470 = Course('Machine Learning', 3.0, [math332, math201])
+# csci400 = Course('Principles of Programming Languages', 3.0, [csci306])
+# csci442 = Course('Operating Systems', 3.0, [csci262, csci274, csci341])
 
-# make semesters
-semester1 = Semester(
-    'Fall 2020', [math111, csm101, edns151, hass100, pagn_elective, csci101])
-semester2 = Semester(
-    'Spring 2021', [math112, phgn100, csci261, csci303, ebgn498])
-semester3 = Semester(
-    'Summer 2021', [csci262, ebgn201])
-semester4 = Semester(
-    'Fall 2021', [chgn121, csci274, hass200, math213, phgn200])
-semester5 = Semester(
-    'Spring 2022', [csci250, csci306, csci403, math201, math225, pagn_elective])
-semester6 = Semester(
-    'Fall 2022', [csci341, csci358, eeng281, math307, math332, pagn_elective])
-semester7 = Semester(
-    'Spring 2023', [csci404, csci473, eeng307, megn441, csci406, pagn_elective])
-semester8 = Semester(
-    'Summer 2023', [csci370])
-semester9 = Semester(
-    'Fall 2023', [csci437, csci470, csci400])
-semester10 = Semester(
-    'Spring 2024', [csci442])
+# # make semesters
+# semester1 = Semester(
+#     'Fall 2020', [math111, csm101, edns151, hass100, pagn_elective, csci101])
+# semester2 = Semester(
+#     'Spring 2021', [math112, phgn100, csci261, csci303, ebgn498])
+# semester3 = Semester(
+#     'Summer 2021', [csci262, ebgn201])
+# semester4 = Semester(
+#     'Fall 2021', [chgn121, csci274, hass200, math213, phgn200])
+# semester5 = Semester(
+#     'Spring 2022', [csci250, csci306, csci403, math201, math225, pagn_elective])
+# semester6 = Semester(
+#     'Fall 2022', [csci341, csci358, eeng281, math307, math332, pagn_elective])
+# semester7 = Semester(
+#     'Spring 2023', [csci404, csci473, eeng307, megn441, csci406, pagn_elective])
+# semester8 = Semester(
+#     'Summer 2023', [csci370])
+# semester9 = Semester(
+#     'Fall 2023', [csci437, csci470, csci400])
+# semester10 = Semester(
+#     'Spring 2024', [csci442])
 
-schedule = Schedule([semester1, semester2, semester3, semester4,
-                     semester5, semester6, semester7, semester8, semester9, semester10])
+# schedule = Schedule([semester1, semester2, semester3, semester4,
+#                      semester5, semester6, semester7, semester8, semester9, semester10])
 
 # print(schedule)
 
@@ -281,5 +345,6 @@ schedule = Schedule([semester1, semester2, semester3, semester4,
 #     print("Schedule is valid")
 # else:
 #     print("Schedule is invalid")
+
 
 test_schedule_validation()

@@ -55,6 +55,36 @@ def get_course_prereqs(dep, cn):
 
     return prereqs
 
+
+def get_course_coreqs(dep, cn):
+    # Transforms inputs from csci, 403 to CSCI403
+    course = f'{dep.upper()}{cn}'
+    QUERY = f'''
+    SELECT corequisites FROM all_courses WHERE CONCAT(department, course_number) = '{course}';
+    '''
+
+    # Stores the return data as a string, still need to process logic
+    coreqs = codd.read_query(QUERY, dburi)['corequisites'].values[0]
+
+    # Split along &
+    if coreqs is None:
+        return None
+
+    coreqs = coreqs.split('&')
+
+    # Remove parenthesis from each element now that it's split
+    for i, coreq in enumerate(coreqs):
+        coreqs[i] = coreq.replace('(', '')
+        coreqs[i] = coreqs[i].replace(')', '')
+
+        # Split along |
+        if '|' in coreqs[i]:
+            coreqs[i] = coreqs[i].split('|')
+    if coreqs == ['NULL']:
+        coreqs = None
+
+    return coreqs
+
 # Take arrays and make them human-readable
 
 
@@ -70,6 +100,26 @@ def parse_prereqs(prereqs):
             print('Take one of:')
             for option in prereq:
                 print('\t', option)
+
+
+def get_course_info(dep, cn):
+    # Gets name, semester hours, prereqs, coreqs
+    prereqs = get_course_prereqs(dep, cn)
+    coreqs = get_course_coreqs(dep, cn)
+
+    # Get course name
+    QUERY = f'''
+    SELECT course_title FROM all_courses WHERE CONCAT(department, course_number) = '{dep.upper()}{cn}';
+    '''
+    name = codd.read_query(QUERY, dburi)['course_title'].values[0]
+
+    # Get course hours
+    QUERY = f'''
+    SELECT semester_hours FROM all_courses WHERE CONCAT(department, course_number) = '{dep.upper()}{cn}';
+    '''
+    hours = codd.read_query(QUERY, dburi)['semester_hours'].values[0]
+
+    return name, dep, str(cn), hours, prereqs, coreqs
 
 
 def main():

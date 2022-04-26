@@ -1,3 +1,4 @@
+from requests import PreparedRequest
 import process_courses as pc
 
 
@@ -108,6 +109,11 @@ class Schedule:
             for course in semester.get_courses():
                 # If the course has prerequisites
                 if course.get_prerequisites() is not None:
+
+                    # TODO: Debugging
+                    if course.get_name() == "CALCULUS FOR SCIENTISTS AND ENGINEERS III":
+                        print("Calc3 Prereqs:", course.get_prerequisites())
+
                     # for each prerequisite in the course
                     for prerequisite in course.get_prerequisites():
                         # Check if the prerequisite is one course or has options
@@ -208,6 +214,144 @@ class Schedule:
                                 return is_valid
         return True
 
+    # Purely for testing purposes
+    def validate_schedule_test(self):
+        is_valid = True
+        # Look at each semester
+        for semester_number, semester in enumerate(self.semesters):
+            # Make sure that each semester has no more than 19.5 hours total
+            if semester.get_total_hours() > 19.5:
+                print(
+                    f"Semester {semester_number + 1} has {semester.get_total_hours()} hours. The maximum is 19.5 hours.")
+                is_valid = False
+                return is_valid
+
+            # For each course in the semester
+            for course in semester.get_courses():
+                # If the course has prerequisites
+                if course.get_prerequisites() is not None:
+
+                    # TODO: Debugging
+                    if course.get_name() == "DISCRETE MATHEMATICS":
+                        print("Calc3 Prereqs:", course.get_prerequisites())
+                        print('Calc3 Coreqs:', course.get_corequisites())
+
+                    # for each prerequisite in the course
+                    for prerequisite in course.get_prerequisites():
+                        # Check if the prerequisite is one course or has options (2D list)
+                        if type(prerequisite) == list:
+                            # If the course has options
+                            previous_taken_courses = []
+                            for previous_semester in self.semesters[:semester_number]:
+                                # add courses from previous semesters to list
+                                semester_courses = previous_semester.get_courses()
+                                for course in semester_courses:
+                                    previous_taken_courses.append(
+                                        str(course.get_dep_cn()))
+                                # previous_taken_courses += previous_semester.get_courses()
+
+                            # Loop over the options
+                            option_fufilled = False
+                            print('Previous taken courses:',
+                                  previous_taken_courses)
+                            for option in prerequisite:
+                                print('Option:', option)
+                                # If the option is in the list of previous taken courses
+                                if option in previous_taken_courses:
+                                    print('Option fulfilled:', option)
+                                    option_fufilled = True
+                                    break
+                                else:
+                                    print('Option not fulfilled:', option)
+
+                            # Check if any of the prerequisite options have been fulfilled
+                            if not option_fufilled:
+                                is_valid = False
+                                print(
+                                    f"{course} is not valid. You have not taken any of the following prerequisites:")
+                                for item in prerequisite:
+                                    if type(item) == str:
+                                        print(f"\t{item}")
+                                    else:
+                                        print(f"\t{item}")
+                                return is_valid
+
+                        else:  # type == str
+                            # check all previous semesters to find this course
+                            previous_taken_courses = []
+                            for previous_semester in self.semesters[:semester_number]:
+                                # add courses from previous semesters to list
+                                previous_taken_courses += previous_semester.get_courses()
+                            # if the prerequisite is not in the list of previous taken courses
+
+                            # Check to see if the prerequisite is in the list of previous taken courses
+                            foundCourse = False
+                            for previous_course in previous_taken_courses:
+                                if previous_course.get_dep_cn().strip() == prerequisite.strip():
+                                    foundCourse = True
+                                    break
+
+                            if not foundCourse:
+                                is_valid = False
+                                print(
+                                    f"{course.get_name()} is not valid. You have not taken {prerequisite}.")
+                                return is_valid
+
+                # If the course has corequisites
+                if course.get_corequisites() is not None:
+                    # for each corequisite in the course
+                    for corequisite in course.get_corequisites():
+                        # Check if the corequisite is one course or has options
+                        if type(corequisite) == list:
+                            # If the course has options
+                            previous_taken_courses = []
+                            for previous_semester in self.semesters[:semester_number+1]:
+                                # add courses from previous semesters to list
+                                semester_courses = previous_semester.get_courses()
+                                for course in semester_courses:
+                                    previous_taken_courses.append(
+                                        str(course.get_dep_cn()))
+
+                            # Loop over the options
+                            option_fufilled = False
+                            print('Previous taken courses:',
+                                  previous_taken_courses)
+                            for option in corequisite:
+                                print('Option:', option)
+                                # If the option is in the list of previous taken courses
+                                if option in previous_taken_courses:
+                                    print('Option fulfilled:', option)
+                                    option_fufilled = True
+                                    break
+                                else:
+                                    print('Option not fulfilled:', option)
+
+                            # # If none of the items in the corequisite list are in the previous taken courses
+                            # if not any(item in previous_taken_courses for item in corequisite):
+                            #     is_valid = False
+                            #     print(
+                            #         f"{course} is not valid. You have not taken any of the following corequisites:")
+                            #     for item in corequisite:
+                            #         print(f"\t{item}")
+                            #     return is_valid
+
+                        else:
+                            # check all semesters up to the current semester to find this course
+                            courses = []
+                            for semester in self.semesters[:semester_number+1]:
+                                # add courses from previous semesters to list
+                                courses += semester.get_courses()
+                            # if the corequisite is not in the list of previous taken courses
+                            if corequisite not in courses:
+                                is_valid = False
+                                if type(corequisite) == str:
+                                    print(
+                                        f"{corequisite} is a corequisite of {course}")
+                                else:
+                                    print(
+                                        f"{corequisite.get_name()} is a corequisite of {course}")
+                                return is_valid
+        return True
 # TESTING
 
 
@@ -260,7 +404,7 @@ def test_schedule_validation():
 
     schedule = Schedule([semester1, semester2, semester3, semester4])
 
-    print(schedule.validate_schedule())
+    print(schedule.validate_schedule_test())
 
     # print(math111)
 

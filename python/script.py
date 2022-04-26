@@ -47,6 +47,16 @@ def script3(current_major, desired_minor):
         f'Question: How many classes on top of a {current_major} major do you have to take to get a minor in {desired_minor}?')
 
 
+def get_major_test(major):
+    QUERY = f"""
+    SELECT * FROM {major}_major;
+    """
+
+    table = codd.read_query(QUERY, dburi)
+    courses = table['course_name'].values
+    print(courses)
+
+
 def main():
     # Call your script something more descriptive than 'script'
     # script()
@@ -60,7 +70,8 @@ def main():
     # table = codd.read_query(QUERY, dburi)
     # print(table)
 
-    print(codd.get_tables(inspector))
+    # print(codd.get_tables(inspector))
+    get_major_test('csci')
     print()
 
     # shared_major_classes('ceen_major', 'phgn_major')

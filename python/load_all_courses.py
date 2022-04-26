@@ -17,7 +17,7 @@ dburi, insepctor = codd.connect(password)
 # Define table locations for convenience
 csci_courses = './Schema/Courses/CSCICourses.csv'
 eeng_courses = './Schema/Courses/EENGCourses.csv'
-all_courses = './Schema/Courses/all_courses.csv'
+all_courses = './Schema/Courses/all_courses_revised.csv'
 
 # csci_courses = '../Schema/Courses/CSCICourses.csv'
 

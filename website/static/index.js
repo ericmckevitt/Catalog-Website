@@ -51,7 +51,7 @@ function deleteMajor(major) {
     })
 }
 
-// implement deleteSemester function
+// deletes a specific semester from the home page
 function deleteSemester(semester_id) {
     fetch('/delete-semester', {
         method: 'POST',
@@ -62,9 +62,20 @@ function deleteSemester(semester_id) {
     })
 }
 
-// implement addSemester function
+// adds a blank semester to the home page
 function addSemester(semester) {
     fetch('/add-semester', {
+        method: 'POST',
+        body: JSON.stringify({})
+    }).then((_res) => {
+        // Refresh page by redirecting to same page
+        window.location.href = "/";
+    })
+}
+
+// validates the schedule on the home page
+function validateSchedule() {
+    fetch('/validate-schedule', {
         method: 'POST',
         body: JSON.stringify({})
     }).then((_res) => {

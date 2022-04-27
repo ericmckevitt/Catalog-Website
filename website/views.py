@@ -267,6 +267,8 @@ def delete_course_from_semester():
         if course and semester:
             # Delete this course from this semester
             semester.courses.remove(course)
+            # Delete this course from the database
+            db.session.delete(course)
             db.session.commit()
 
     return jsonify({})
@@ -291,6 +293,9 @@ def delete_semester():
     current_user.semesters.remove(semester)
 
     # TODO: MAYBE: Delete all courses in this semester
+    # Delete all courses in this semester
+    for course in semester.courses:
+        db.session.delete(course)
 
     # Change all other semester ids above this id to be one less
     for s in current_user.semesters:
@@ -326,5 +331,12 @@ def add_semester():
     flash('Semester Added!', category='success')
 
     print('Add Semester!')
+
+    return jsonify({})
+
+
+@views.route('/validate-schedule', methods=['GET'])
+@login_required
+def validate_schedule():
 
     return jsonify({})

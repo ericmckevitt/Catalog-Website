@@ -91,6 +91,18 @@ span.x {
     margin-bottom: 18px;
 }
 
+.add-course-to-semester-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.validate-semester-section {
+    padding: 22px;
+    border-radius: 12px;
+    background-color: var(--very-light-blue);
+    margin-bottom: 18px;
+}
+
 .courses-taken-list {
     margin-top: 16px;
 }

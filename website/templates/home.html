@@ -73,18 +73,24 @@
     >
         <span aria-hidden="true">Add Semester</span>
     </button>
+    <!-- Button and Modal for Add Course to Semester -->
+    <!-- Button trigger modal -->
+    <button
+        type="button"
+        class="btn btn-primary add-semester-btn"
+        data-toggle="modal"
+        data-target="#addCourseModal"
+    >
+        Add Course to Semester
+    </button>
 </section>
 
-<!-- Button and Modal for Add Course to Semester -->
-<!-- Button trigger modal -->
-<button
-    type="button"
-    class="btn btn-primary"
-    data-toggle="modal"
-    data-target="#addCourseModal"
->
-    Add Course to Semester
-</button>
+<!-- Button for Validating Schedule -->
+<section class="validate-semester-section">
+    <button type="button" class="btn btn-primary" onClick="validateSchedule()">
+        <span aria-hidden="true">Validate Schedule</span>
+    </button>
+</section>
 
 <!-- Add Course Modal -->
 <div

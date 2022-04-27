@@ -27,7 +27,7 @@ class Course(db.Model):
 class Semester(db.Model):
     # Make a semester_id as primary key
     id = db.Column(db.Integer, primary_key=True)
-    # Make a semester_name as unique
+    # Make a semester_name
     semester_name = db.Column(db.String(64))
     # make a user_id as foreign key
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

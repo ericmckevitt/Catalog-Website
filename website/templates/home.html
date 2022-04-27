@@ -12,9 +12,7 @@
 
         <li class="list-group-item semester-row">
             <div class="row semester-title-row">
-                <div class="col" align="center">
-                    Semester {{semester.semester_number}}
-                </div>
+                <div class="col" align="center">{{semester.semester_name}}</div>
             </div>
             <!-- Add extra padding if there are courses for this semester -->
             {% if semester.courses %}
@@ -47,6 +45,7 @@
                         class="btn btn-outline-primary edit-semester-name-btn"
                         data-toggle="modal"
                         data-target="#editSemesterNameModal"
+                        onClick="renameSemesterSelector({{ semester.id }});"
                     >
                         Edit Name
                     </button>
@@ -206,17 +205,31 @@
                 </button>
             </div>
             <!-- TODO: Change modal body background color so that it doesn't match the surrounding elements -->
-            <div class="modal-body">...</div>
-            <div class="modal-footer" style="margin: auto !important">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                >
-                    Close
-                </button>
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="modal-body">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="semester_new_name">Name:</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="semester_new_name"
+                            name="semester_new_name"
+                            placeholder="Enter a new name for the semester (ex. Fall 2022)"
+                        />
+                    </div>
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                </form>
             </div>
+            <div class="modal-footer" style="margin: auto !important"></div>
         </div>
     </div>
 </div>

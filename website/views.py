@@ -31,6 +31,9 @@ courses_temp = {
 
 }
 
+# This will temporarily hold the ID for the semester that is being renamed
+new_semester_name_ID = ""
+
 
 def update_class_standing():
     # Update class standing based on credits taken
@@ -69,58 +72,81 @@ def home():
     # TODO: Implement semester building form
     if request.method == 'POST':
         print('Caught!')
-        # Get information from new course form
-        department = request.form.get('department')
-        course_number = request.form.get('course_number')
-        semester_id = request.form.get('semester')
-        # Print to console
-        print(department)
-        print(course_number)
-        print(semester_id)
-        # TODO: Add new course to semester in database
 
-        # Get a codd database connection
-        dburi, inspector = codd.connect('Mines6515')
-
-        # Use codd to get course info
-        # course_info = codd.get_course_info(department, course_number, dburi)
-        # print(course_info)
-
-        course_info = pc.get_course_info(
-            department, int(course_number.strip()))
-
-        print(course_info)
-
-        # extract data from course_info
-        course_found = True
-        course_name = ""
-        course_credits = ""
+        # Get semester name from form
         try:
-            course_name = course_info[0]
-            course_credits = course_info[3]
-            print('course_name:', course_name)
-            print('course credits:', course_credits)
-            if course_credits == None or course_credits == "None":
-                course_credits = ""
-        except:
-            flash('Course not found!', category='error')
-            course_found = False
+            semester_new_name = request.form['semester_new_name']
+            print('Reqest to rename semester.')
 
-        print("course_name:", course_name, type(course_name))
-        print("course credits:", course_credits, type(course_credits))
+            # Rename semester
+            semester_id = new_semester_name_ID
+            print('semester_id:', semester_id)
+            semester = Semester.query.filter_by(id=semester_id).first()
+            print('Current semester name:', str(semester.semester_name))
 
-        # If data is None, flash a message
-        if department is None or course_number is None or semester_id is None:
-            flash('Please fill out all fields.')
-            return render_template('home.html')
-        if course_found:
-            print('Adding course to database')
-            # Create new course object
-            new_course = Course(department=department, course_number=course_number,
-                                course_name=course_name, credit_hours=course_credits, is_taken="False", user_id=current_user.id, semester_id=semester_id)
-            # Add course to database
-            db.session.add(new_course)
+            # Set the semester's name to the new name
+            semester.semester_name = semester_new_name
+
+            print('New semester name:', str(semester.semester_name))
+
             db.session.commit()
+            print('Semester renamed.')
+
+        except KeyError:
+            # Handle adding a new course
+            print('Request to add a new course.')
+
+            # Get information from new course form
+            department = request.form.get('department')
+            course_number = request.form.get('course_number')
+            semester_id = request.form.get('semester')
+            # Print to console
+            print(department)
+            print(course_number)
+            print(semester_id)
+
+            # Get a codd database connection
+            dburi, inspector = codd.connect('Mines6515')
+
+            # Use codd to get course info
+            # course_info = codd.get_course_info(department, course_number, dburi)
+            # print(course_info)
+
+            course_info = pc.get_course_info(
+                department, int(course_number.strip()))
+
+            print(course_info)
+
+            # extract data from course_info
+            course_found = True
+            course_name = ""
+            course_credits = ""
+            try:
+                course_name = course_info[0]
+                course_credits = course_info[3]
+                print('course_name:', course_name)
+                print('course credits:', course_credits)
+                if course_credits == None or course_credits == "None":
+                    course_credits = ""
+            except:
+                flash('Course not found!', category='error')
+                course_found = False
+
+            print("course_name:", course_name, type(course_name))
+            print("course credits:", course_credits, type(course_credits))
+
+            # If data is None, flash a message
+            if department is None or course_number is None or semester_id is None:
+                flash('Please fill out all fields.')
+                return render_template('home.html')
+            if course_found:
+                print('Adding course to database')
+                # Create new course object
+                new_course = Course(department=department, course_number=course_number,
+                                    course_name=course_name, credit_hours=course_credits, is_taken="False", user_id=current_user.id, semester_id=semester_id)
+                # Add course to database
+                db.session.add(new_course)
+                db.session.commit()
 
     return render_template("home.html", user=current_user)
 
@@ -404,4 +430,14 @@ def validate_schedule():
         else:
             flash(f'Schedule is invalid! {error_msg}', category='error')
 
+    return jsonify({})
+
+
+@views.route('/rename-semester', methods=['GET', 'POST'])
+@login_required
+def rename_semester():
+    if request.method == 'POST':
+        # Get the semester ID
+        global new_semester_name_ID
+        new_semester_name_ID = str(json.loads(request.data)['semester_id'])
     return jsonify({})

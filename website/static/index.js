@@ -84,3 +84,15 @@ function validateSchedule(userID) {
         window.location.href = "/";
     })
 }
+
+// Stores the ID of the semester whose name is being edited
+function renameSemesterSelector(semester_id) {
+    console.log("LOG: " + semester_id);
+    fetch('/rename-semester', {
+        method: 'POST',
+        body: JSON.stringify({ semester_id: semester_id })
+    }).then((_res) => {
+        // Refresh page by redirecting to same page
+        // window.location.href = "/";
+    })
+}

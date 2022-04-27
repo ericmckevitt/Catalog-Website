@@ -298,7 +298,7 @@ class Schedule:
                                 return is_valid, error_msg
 
                 # If the course has corequisites
-                if course.get_corequisites() is not None:
+                if course.get_corequisites() is not None and course.get_corequisites() != []:
                     # for each corequisite in the course
                     for corequisite in course.get_corequisites():
                         # Check if the corequisite is one course or has options
@@ -325,27 +325,56 @@ class Schedule:
                                     break
                                 # else:
                                 #     print('Option not fulfilled:', option)
-                        else:
-                            # check all semesters up to the current semester to find this course
-                            previous_taken_courses = []
-                            for semester in self.semesters[:semester_number+1]:
-                                # add courses from previous semesters to list
-                                # add courses from previous semesters to list
-                                semester_courses = previous_semester.get_courses()
-                                for course in semester_courses:
-                                    previous_taken_courses.append(
-                                        str(course.get_dep_cn()))
-                            # if the corequisite is not in the list of previous taken courses
-                            if corequisite not in previous_taken_courses:
+
+                            # Check if any of the prerequisite options have been fulfilled
+                            if not option_fufilled:
                                 is_valid = False
-                                if type(corequisite) == str:
-                                    error_msg = f"{corequisite} is a corequisite of {course}."
-                                    print(error_msg)
-                                    return is_valid, error_msg
-                                else:
-                                    error_msg = f"{corequisite.get_name()} is a corequisite of {course}."
-                                    print(error_msg)
-                                    return is_valid, error_msg
+                                error_msg = f"{course.get_name()} is not valid. You have not taken any of the following corequisites:"
+                                print(error_msg)
+                                for item in corequisite:
+                                    if type(item) == str:
+                                        print(f"\t{item}")
+                                    else:
+                                        print(f"\t{item}")
+                                return is_valid, error_msg
+                        else:
+                            # # check all semesters up to the current semester to find this course
+                            # previous_taken_courses = []
+                            # for semester in self.semesters[:semester_number+1]:
+                            #     # add courses from previous semesters to list
+                            #     # add courses from previous semesters to list
+                            #     semester_courses = previous_semester.get_courses()
+                            #     for course in semester_courses:
+                            #         previous_taken_courses.append(
+                            #             str(course.get_dep_cn()))
+                            # # if the corequisite is not in the list of previous taken courses
+                            # if corequisite not in previous_taken_courses:
+                            #     is_valid = False
+                            #     if type(corequisite) == str:
+                            #         error_msg = f"{corequisite} is a corequisite of {course}."
+                            #         print(error_msg)
+                            #         return is_valid, error_msg
+                            #     else:
+                            #         error_msg = f"{corequisite.get_name()} is a corequisite of {course}."
+                            #         print(error_msg)
+                            #         return is_valid, error_msg
+                            # check all previous semesters to find this course
+                            previous_taken_courses = []
+                            for previous_semester in self.semesters[:semester_number+1]:
+                                # add courses from previous semesters to list
+                                previous_taken_courses += previous_semester.get_courses()
+                            # Check to see if the prerequisite is in the list of previous taken courses
+                            foundCourse = False
+                            for previous_course in previous_taken_courses:
+                                if previous_course.get_dep_cn().strip() == corequisite.strip():
+                                    foundCourse = True
+                                    break
+
+                            if not foundCourse:
+                                is_valid = False
+                                error_msg = f"{course.get_name()} is not valid. You have not taken {corequisite}."
+                                print(error_msg)
+                                return is_valid, error_msg
 
         return True, ""
 # This method tests the process of building and validating a schedule.

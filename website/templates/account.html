@@ -84,7 +84,7 @@ content%}
     {% endif %}
 
     <ul class="list-group list-group-flush courses-taken-list" id="notes">
-        {% for course in user.courses %}
+        {% for course in user.courses %} {% if course.is_taken == "True" %}
         <li class="list-group-item">
             <div class="row">
                 <div class="col-sm-2">
@@ -103,7 +103,7 @@ content%}
                 </div>
             </div>
         </li>
-        {% endfor %}
+        {% endif %} {% endfor %}
     </ul>
     <br />
 

@@ -116,7 +116,7 @@ def home():
             print('Adding course to database')
             # Create new course object
             new_course = Course(department=department, course_number=course_number,
-                                course_name=course_name, credit_hours=course_credits, user_id=current_user.id, semester_id=semester_id)
+                                course_name=course_name, credit_hours=course_credits, is_taken="False", user_id=current_user.id, semester_id=semester_id)
             # Add course to database
             db.session.add(new_course)
             db.session.commit()
@@ -132,6 +132,9 @@ def account():
         # note = request.form.get('note')
         department = request.form.get('department')
         course_number = request.form.get('course_number')
+
+        print('department:', department)
+        print('course_number:', course_number)
 
         # If submitting a new course
         if department and course_number:
@@ -154,18 +157,16 @@ def account():
                 try:
                     # Look up course information from codd
                     dburi, inspector = codd.connect('Mines6515')
-                    course_info = codd.get_course_info(
-                        department, course_number, dburi)
+                    course_info = pc.get_course_info(
+                        department, int(course_number.strip()))
 
                     # extract data from course_info
                     course_found = True
                     course_name = ""
                     course_credits = ""
                     try:
-                        course_name = course_info['course_name'].values[0].upper(
-                        )
-                        course_credits = str(
-                            course_info['credit_hours'].values[0])
+                        course_name = course_info[0]
+                        course_credits = course_info[3]
                         if course_credits == None or course_credits == "None":
                             course_credits = ""
                     except:
@@ -175,8 +176,6 @@ def account():
                     print(course_name)
                     print(course_credits)
 
-                    # course_name = courses_temp[course_lookup][0]
-                    # credit_hours = courses_temp[course_lookup][1]
                     # Increment credits taken by that course's number of credits
                     try:
                         current_user.credits_taken = str(
@@ -185,10 +184,11 @@ def account():
                         flash('Course not found!', category='error')
                     # Check if class standing has changed and update it
                     update_class_standing()
-                    degree_progress = compute_degree_progress()
+                    # degree_progress = compute_degree_progress()
                     # Commit changes
                     db.session.commit()
-                except KeyError:
+                except Exception as e:
+                    print(e)
                     flash('This is not a registered course in the system.',
                           category='error')
                     return render_template("account.html", user=current_user)
@@ -207,7 +207,7 @@ def account():
 
                 # Create Course row and add to database
                 new_course = Course(
-                    department=department, course_number=course_number, course_name=course_name, credit_hours=course_credits, user_id=current_user.id)
+                    department=department, course_number=course_number, course_name=course_name, credit_hours=course_credits, is_taken="True", user_id=current_user.id)
                 db.session.add(new_course)
                 db.session.commit()
                 flash('Course added!', category='success')

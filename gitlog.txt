@@ -1,3 +1,118 @@
+commit 0ba15fa6854812649a39771bb6d1b4d9486bd7a1
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Wed Apr 27 00:49:12 2022 -0600
+
+    User can now add any course in codd from the home page. Still interferes with account page courses, need to separate these.
+
+commit 27257f899da03bda6b937d753211323cdc5d4db5
+Merge: 9d5c141 bd02f15
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Apr 26 22:40:44 2022 -0600
+
+    Unstaged __pycache__ for merge
+
+commit 9d5c141ef4d099c7f64a558bb0a37a63b71daad3
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Apr 26 22:34:47 2022 -0600
+
+    Committing so I can merge ScheduleBuilder to this branch.
+
+commit bd02f159bea867ba67745f622c62915f8c0b2ac9
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Apr 26 22:32:18 2022 -0600
+
+    About to merge to master
+
+commit eb2418b771d007c5ed0f224bb5d984f950a79545
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Apr 26 21:02:47 2022 -0600
+
+    Schedule Validation algorithm now up and running. Need to test with a bigger schedule.
+
+commit 1b72a5fff08e74aa9d7892ec271f6bbd75457967
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Apr 26 16:25:08 2022 -0600
+
+    Pushing test code
+
+commit 172a9cdf313cdd060a9744f7af196e9be525baf3
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 23 21:44:30 2022 -0600
+
+    Working on bug, still doesn't know how to handle the list case for prerequisites.
+
+commit ca9146f2d115a167a30f87a3f40511f2eb43a4f2
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 23 20:24:10 2022 -0600
+
+    About to make changes to schedule validation. It's checking object types when we actually need to check string types.
+
+commit c1380cbfa55c7c415fb8269c60482ca97cc364ab
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 23 17:52:57 2022 -0600
+
+    Testing schedules in schedule_validation. There is still a bug with MATH111, not sure why.
+
+commit 13f1ee47ae3bc87abd7f49c67ff6dcca3dbc1de0
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 23 16:43:10 2022 -0600
+
+    Pushing version with bugs. Need to change how courses are accessed.
+
+commit d9c344b5d900e8941a3f6239294fbbd450bf3bac
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 9 21:03:46 2022 -0600
+
+    Account page course adding now references the database rather than the temporary dictionary solution from before.
+
+commit ebb0569762b7713f38492005b4b47540bccd61a7
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 9 20:52:54 2022 -0600
+
+    User can now delete courses from specific semesters via the x button
+
+commit 5b3554000ed51b94d5d9a658a042b847bb0305c2
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 9 20:27:18 2022 -0600
+
+    Added Edit Name and Delete Semester Buttons, Edit Name still needs functionality.
+
+commit f81dd53427c5e6d4773fc5f07bf2e2d36649a66f
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 9 16:27:51 2022 -0600
+
+    Table display for courses in each semester is now much better
+
+commit 10423028b058a764683d84bcb2881ca0f7c2ce63
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 9 15:57:39 2022 -0600
+
+    User can now add courses to specific semesters, but display needs to be improved. There is a bug where adding courses to no particular semester adds it to the list of courses taken, which may not be desired. Maybe make a checkbox that defaults to off for this.
+
+commit ebe5d7bc6c120fb5f162d6a313cf95c74e7d948e
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Sat Apr 9 14:41:49 2022 -0600
+
+    Added Electrical Engineering courses to the schema. Adjusted load_all_courses.py because its relative directory has changed. Similar changes need to be made to the other load functions.
+
+commit b7ce40e62b97b14f3698ea1f3d64998bde2cf98d
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Fri Apr 8 18:40:30 2022 -0600
+
+    Add Course to Semester modal front end implemented. Buttons don't actually perform any functionality yet.
+
+commit f3db005616e6f96a7d35770a4dbc2283aa2cb1a2
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Fri Apr 8 18:06:01 2022 -0600
+
+    Styled semester display section on home page. Next step is to add functionality to add courses to a semester.
+
+commit d28fed29b7dd49bdcf41c6174aab4d974bd9804d
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Thu Apr 7 23:06:59 2022 -0600
+
+    Updated gitlog.txt
+
 commit cad1e834abaa73dc6c620b87f4c162800647276f
 Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
 Date:   Thu Apr 7 22:09:13 2022 -0600
@@ -15,6 +130,30 @@ Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
 Date:   Thu Apr 7 18:38:12 2022 -0600
 
     Implemented algorithm to validate semesters. Checks if prereqs and coreqs are satisfied.
+
+commit ea6d609676fbc49cf17bcc2f0e18a119a0d925d2
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Thu Apr 7 15:51:26 2022 -0600
+
+    Committing changes to switch branches. Negligible change since last commit.
+
+commit 68eb493d566db82ed5a0ad0173ffa70f04edda14
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Apr 5 00:50:18 2022 -0600
+
+    User can now delete semesters with a button on the home page.
+
+commit bff2a0c60fdc6f4608b21e16dac301f2a5325704
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Tue Apr 5 00:27:28 2022 -0600
+
+    Made Semester class in DB and User can now add Semester via a button on Home page.
+
+commit 4572394c6edc6b5d41a680ddff9bf14694c62ab0
+Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>
+Date:   Mon Apr 4 21:22:37 2022 -0600
+
+    Made ScheduleBuilder branch
 
 commit 2a1b7cdead168af3d50b2dff954a640a7c43bc58
 Author: ericmckevitt <64185510+ericmckevitt@users.noreply.github.com>

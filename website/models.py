@@ -16,6 +16,8 @@ class Course(db.Model):
     course_name = db.Column(db.String(500))
     # credit hours TODO make this NUMERIC(2,1)
     credit_hours = db.Column(db.String(10))
+    # boolean for whether this course has actually been taken.
+    is_taken = db.Column(db.String(5))
     # Foreign key relationship on user.id (1 user to Many courses relationship) (FK = lowercase 'user')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     # Foreign key relationship on semester.id (1 semester to Many courses relationship) (FK = lowercase 'semester')

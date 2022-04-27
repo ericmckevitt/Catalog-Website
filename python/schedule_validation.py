@@ -230,12 +230,6 @@ class Schedule:
             for course in semester.get_courses():
                 # If the course has prerequisites
                 if course.get_prerequisites() is not None:
-
-                    # TODO: Debugging
-                    if course.get_name() == "DISCRETE MATHEMATICS":
-                        print("Calc3 Prereqs:", course.get_prerequisites())
-                        print('Calc3 Coreqs:', course.get_corequisites())
-
                     # for each prerequisite in the course
                     for prerequisite in course.get_prerequisites():
                         # Check if the prerequisite is one course or has options (2D list)
@@ -252,17 +246,11 @@ class Schedule:
 
                             # Loop over the options
                             option_fufilled = False
-                            print('Previous taken courses:',
-                                  previous_taken_courses)
                             for option in prerequisite:
-                                print('Option:', option)
                                 # If the option is in the list of previous taken courses
                                 if option in previous_taken_courses:
-                                    print('Option fulfilled:', option)
                                     option_fufilled = True
                                     break
-                                else:
-                                    print('Option not fulfilled:', option)
 
                             # Check if any of the prerequisite options have been fulfilled
                             if not option_fufilled:
@@ -282,8 +270,6 @@ class Schedule:
                             for previous_semester in self.semesters[:semester_number]:
                                 # add courses from previous semesters to list
                                 previous_taken_courses += previous_semester.get_courses()
-                            # if the prerequisite is not in the list of previous taken courses
-
                             # Check to see if the prerequisite is in the list of previous taken courses
                             foundCourse = False
                             for previous_course in previous_taken_courses:
@@ -314,35 +300,29 @@ class Schedule:
 
                             # Loop over the options
                             option_fufilled = False
-                            print('Previous taken courses:',
-                                  previous_taken_courses)
+                            # print('Previous taken courses:',
+                            #       previous_taken_courses)
                             for option in corequisite:
-                                print('Option:', option)
+                                # print('Option:', option)
                                 # If the option is in the list of previous taken courses
                                 if option in previous_taken_courses:
-                                    print('Option fulfilled:', option)
+                                    # print('Option fulfilled:', option)
                                     option_fufilled = True
                                     break
-                                else:
-                                    print('Option not fulfilled:', option)
-
-                            # # If none of the items in the corequisite list are in the previous taken courses
-                            # if not any(item in previous_taken_courses for item in corequisite):
-                            #     is_valid = False
-                            #     print(
-                            #         f"{course} is not valid. You have not taken any of the following corequisites:")
-                            #     for item in corequisite:
-                            #         print(f"\t{item}")
-                            #     return is_valid
-
+                                # else:
+                                #     print('Option not fulfilled:', option)
                         else:
                             # check all semesters up to the current semester to find this course
-                            courses = []
+                            previous_taken_courses = []
                             for semester in self.semesters[:semester_number+1]:
                                 # add courses from previous semesters to list
-                                courses += semester.get_courses()
+                                # add courses from previous semesters to list
+                                semester_courses = previous_semester.get_courses()
+                                for course in semester_courses:
+                                    previous_taken_courses.append(
+                                        str(course.get_dep_cn()))
                             # if the corequisite is not in the list of previous taken courses
-                            if corequisite not in courses:
+                            if corequisite not in previous_taken_courses:
                                 is_valid = False
                                 if type(corequisite) == str:
                                     print(

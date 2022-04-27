@@ -8,6 +8,7 @@ from . import db
 import json
 import python.codd as codd
 import python.load_all_majors as maj
+import python.process_courses as pc
 
 # Initialize blueprint called names
 views = Blueprint('views', __name__)
@@ -81,7 +82,12 @@ def home():
         dburi, inspector = codd.connect('Mines6515')
 
         # Use codd to get course info
-        course_info = codd.get_course_info(department, course_number, dburi)
+        # course_info = codd.get_course_info(department, course_number, dburi)
+        # print(course_info)
+
+        course_info = pc.get_course_info(
+            department, int(course_number.strip()))
+
         print(course_info)
 
         # extract data from course_info
@@ -89,8 +95,10 @@ def home():
         course_name = ""
         course_credits = ""
         try:
-            course_name = course_info['course_name'].values[0].upper()
-            course_credits = str(course_info['credit_hours'].values[0])
+            course_name = course_info[0]
+            course_credits = course_info[3]
+            print('course_name:', course_name)
+            print('course credits:', course_credits)
             if course_credits == None or course_credits == "None":
                 course_credits = ""
         except:
@@ -105,6 +113,7 @@ def home():
             flash('Please fill out all fields.')
             return render_template('home.html')
         if course_found:
+            print('Adding course to database')
             # Create new course object
             new_course = Course(department=department, course_number=course_number,
                                 course_name=course_name, credit_hours=course_credits, user_id=current_user.id, semester_id=semester_id)

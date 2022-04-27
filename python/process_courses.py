@@ -1,6 +1,6 @@
 from matplotlib.contour import ContourSet
 from parso import parse
-import codd
+from . import codd
 import numpy as np
 
 # Collect credentials for user and server

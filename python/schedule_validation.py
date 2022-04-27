@@ -1,5 +1,5 @@
 from requests import PreparedRequest
-import process_courses as pc
+from . import process_courses as pc
 import time  # For testing time taken to validate schedule.
 
 
@@ -46,7 +46,7 @@ class Course:
 
 
 class Semester:
-    def __init__(self, name, courses=None):
+    def __init__(self, name, courses=[]):
         self.name = name
         self.courses = courses
 
@@ -59,6 +59,9 @@ class Semester:
     def get_courses(self):
         return self.courses
 
+    def set_courses(self, courses):
+        self.courses = courses
+
     def get_name(self):
         return self.name
 
@@ -70,7 +73,7 @@ class Semester:
 
 
 class Schedule:
-    def __init__(self, semesters=None):
+    def __init__(self, semesters=[]):
         self.semesters = semesters
 
     def __repr__(self):
@@ -85,6 +88,9 @@ class Schedule:
 
     def add_semester(self, semester):
         self.semesters.append(semester)
+
+    def set_semesters(self, semesters: list):
+        self.semesters = semesters
 
     def get_semesters(self):
         return self.semesters
@@ -222,10 +228,10 @@ class Schedule:
         for semester_number, semester in enumerate(self.semesters):
             # Make sure that each semester has no more than 19.5 hours total
             if semester.get_total_hours() > 19.5:
-                print(
-                    f"Semester {semester_number + 1} has {semester.get_total_hours()} hours. The maximum is 19.5 hours.")
+                error_msg = f"Semester {semester_number + 1} has {semester.get_total_hours()} hours. The maximum is 19.5 hours."
+                print(error_msg)
                 is_valid = False
-                return is_valid
+                return is_valid, error_msg
 
             # For each course in the semester
             for course in semester.get_courses():
@@ -256,14 +262,14 @@ class Schedule:
                             # Check if any of the prerequisite options have been fulfilled
                             if not option_fufilled:
                                 is_valid = False
-                                print(
-                                    f"{course} is not valid. You have not taken any of the following prerequisites:")
+                                error_msg = f"{course.get_name()} is not valid. You have not taken any of the following prerequisites:"
+                                print(error_msg)
                                 for item in prerequisite:
                                     if type(item) == str:
                                         print(f"\t{item}")
                                     else:
                                         print(f"\t{item}")
-                                return is_valid
+                                return is_valid, error_msg
 
                         else:  # type == str
                             # check all previous semesters to find this course
@@ -280,9 +286,9 @@ class Schedule:
 
                             if not foundCourse:
                                 is_valid = False
-                                print(
-                                    f"{course.get_name()} is not valid. You have not taken {prerequisite}.")
-                                return is_valid
+                                error_msg = f"{course.get_name()} is not valid. You have not taken {prerequisite}."
+                                print(error_msg)
+                                return is_valid, error_msg
 
                 # If the course has corequisites
                 if course.get_corequisites() is not None:
@@ -326,13 +332,15 @@ class Schedule:
                             if corequisite not in previous_taken_courses:
                                 is_valid = False
                                 if type(corequisite) == str:
-                                    print(
-                                        f"{corequisite} is a corequisite of {course}")
+                                    error_msg = f"{corequisite} is a corequisite of {course}."
+                                    print(error_msg)
+                                    return is_valid, error_msg
                                 else:
-                                    print(
-                                        f"{corequisite.get_name()} is a corequisite of {course}")
-                                return is_valid
-        return True
+                                    error_msg = f"{corequisite.get_name()} is a corequisite of {course}."
+                                    print(error_msg)
+                                    return is_valid, error_msg
+
+        return True, ""
 # This method tests the process of building and validating a schedule.
 
 
@@ -425,7 +433,7 @@ def test_schedule_validation():
     # Start a timer
     start = time.time()
     # Validate the schedule
-    if schedule.validate_schedule_test():
+    if schedule.validate_schedule():
         print("\nSchedule is valid\n")
     else:
         print("\nSchedule is invalid\n")
@@ -518,4 +526,4 @@ def test_schedule_validation():
 # else:
 #     print("Schedule is invalid")
 
-test_schedule_validation()
+# test_schedule_validation()

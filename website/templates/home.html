@@ -87,7 +87,11 @@
 
 <!-- Button for Validating Schedule -->
 <section class="validate-semester-section">
-    <button type="button" class="btn btn-primary" onClick="validateSchedule()">
+    <button
+        type="button"
+        class="btn btn-primary"
+        onClick="validateSchedule( {{ user.id }} );"
+    >
         <span aria-hidden="true">Validate Schedule</span>
     </button>
 </section>

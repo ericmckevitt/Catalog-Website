@@ -74,10 +74,11 @@ function addSemester(semester) {
 }
 
 // validates the schedule on the home page
-function validateSchedule() {
+function validateSchedule(userID) {
+    console.log("LOG: " + userID);
     fetch('/validate-schedule', {
         method: 'POST',
-        body: JSON.stringify({})
+        body: JSON.stringify({ userID: userID })
     }).then((_res) => {
         // Refresh page by redirecting to same page
         window.location.href = "/";

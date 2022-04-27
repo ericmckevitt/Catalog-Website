@@ -9,6 +9,7 @@ import json
 import python.codd as codd
 import python.load_all_majors as maj
 import python.process_courses as pc
+import python.schedule_validation as sv
 
 # Initialize blueprint called names
 views = Blueprint('views', __name__)
@@ -335,8 +336,72 @@ def add_semester():
     return jsonify({})
 
 
-@views.route('/validate-schedule', methods=['GET'])
+@views.route('/validate-schedule', methods=['GET', 'POST'])
 @login_required
 def validate_schedule():
+    print('Validate Schedule!')
+
+    if request.method == 'POST':
+        # Get the current user's ID from the request
+        userID = json.loads(request.data)['userID']
+
+        # Get all the semesters for this user
+        semesters = Semester.query.filter_by(user_id=userID).all()
+
+        # If there are no semesters, return an error
+        if semesters is None:
+            flash('There are no semesters to validate!', category='error')
+            return jsonify({'error': 'No semesters found'})
+
+        # Make a list to hold all of the semesters
+        semester_list = []
+
+        # For each semester, get the courses and add them to the semester list
+        for semester in semesters:
+            # Get the name of the semester
+            semester_name = semester.semester_name
+            # make a Semester object from sv
+            current_semester = sv.Semester(str(semester_name))
+
+            # Make sure there are no courses in the semester already
+            current_semester.set_courses([])
+
+            # Get all the courses for this semester
+            course_tables = Course.query.filter_by(
+                semester_id=semester.id).all()
+
+            # For each course
+            for course in course_tables:
+                # Get the course department and number
+                course_department = str(course.department)
+                course_number = int(course.course_number)
+
+                # Grab the rest of the data from codd
+                name, dept, cn, hours, prereqs, coreqs = pc.get_course_info(
+                    course_department, course_number)
+
+                # If the course is not found, print an error
+                if name is None or name == '':
+                    print("Course not found!")
+
+                # Build a Course object from the data
+                current_course = sv.Course(
+                    name, dept, cn, hours, prereqs, coreqs)
+
+                # Add the course to the current semester
+                current_semester.add_course(current_course)
+
+            # Add the semester to the list of semesters
+            semester_list.append(current_semester)
+
+        # Make a schedule object
+        schedule = sv.Schedule(semester_list)
+
+        # Validate the schedule
+        is_schedule_valid, error_msg = schedule.validate_schedule()
+        if is_schedule_valid:
+            flash(f'Schedule is valid! {error_msg}', category='success')
+        else:
+            flash(f'Schedule is invalid! {error_msg}', category='error')
 
     return jsonify({})

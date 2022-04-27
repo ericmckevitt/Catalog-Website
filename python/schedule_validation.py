@@ -1,5 +1,6 @@
 from requests import PreparedRequest
 import process_courses as pc
+import time
 
 
 class Course:
@@ -373,20 +374,67 @@ def test_schedule_validation():
     csci341 = Course(name, dept, cn, hours, prereqs, coreqs)
     name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('HASS', 200)
     hass200 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('EENG', 281)
+    eeng281 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('EENG', 307)
+    eeng307 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('MATH', 332)
+    math332 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 306)
+    csci306 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('MEGN', 441)
+    megn441 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('MATH', 201)
+    math201 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 406)
+    csci406 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 404)
+    csci404 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 470)
+    csci470 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 370)
+    csci370 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 400)
+    csci400 = Course(name, dept, cn, hours, prereqs, coreqs)
+    name, dept, cn, hours, prereqs, coreqs = pc.get_course_info('CSCI', 442)
+    csci442 = Course(name, dept, cn, hours, prereqs, coreqs)
 
+    # Define semesters here
     semester1 = Semester(
         'Fall 2020', [math111, hass100, chgn121, csci101, csm101])
     semester2 = Semester('Spring 2021', [math112, phgn100, edns151, csci261])
     semester3 = Semester(
         'Fall 2021', [math213, phgn200, csci274, csci262, ebgn201])
-    semester4 = Semester('Spring 2022', [math225, csci358, csci341, hass200])
-    # semester2 = Semester('Spring 2021', [chgn121, csci261, hass200])
+    semester4 = Semester(
+        'Spring 2022', [math225, csci358, csci341, hass200, eeng281])
+    semester5 = Semester(
+        'Fall 2022', [eeng307, math332, csci306, megn441, math201])
+    semester6 = Semester(
+        'Spring 2023', [csci406, csci404, csci470])
+    semester7 = Semester(
+        'Summer 2023', [csci370])
+    semester8 = Semester(
+        'Fall 2023', [csci400])
+    semester9 = Semester(
+        'Spring 2024', [csci442])
 
-    schedule = Schedule([semester1, semester2, semester3, semester4])
+    # Add semesters to a schedule
+    schedule = Schedule(
+        [semester1, semester2, semester3, semester4, semester5, semester6, semester7, semester8, semester9])
 
-    print(schedule.validate_schedule_test())
+    # Start a timer
+    start = time.time()
+    # Validate the schedule
+    if schedule.validate_schedule_test():
+        print("\nSchedule is valid\n")
+    else:
+        print("\nSchedule is invalid\n")
+    # End the timer
+    end = time.time()
 
-    # print(math111)
+    # Print the time taken to validate the schedule
+    print("Time taken to validate the schedule: " +
+          str(end - start) + " seconds")
 
 
 # Make courses
@@ -469,6 +517,5 @@ def test_schedule_validation():
 #     print("Schedule is valid")
 # else:
 #     print("Schedule is invalid")
-
 
 test_schedule_validation()

@@ -27,7 +27,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix="/")
 
     # Import models
-    from .models import User, Course
+    from .models import User, Course, Semester
 
     # Create database (if not exists)
     create_database(app)

@@ -18,6 +18,21 @@ class Course(db.Model):
     credit_hours = db.Column(db.String(10))
     # Foreign key relationship on user.id (1 user to Many courses relationship) (FK = lowercase 'user')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # Foreign key relationship on semester.id (1 semester to Many courses relationship) (FK = lowercase 'semester')
+    semester_id = db.Column(db.Integer, db.ForeignKey('semester.id'))
+
+
+class Semester(db.Model):
+    # Make a semester_id as primary key
+    id = db.Column(db.Integer, primary_key=True)
+    # Make a semester_name as unique
+    semester_name = db.Column(db.String(64))
+    # make a user_id as foreign key
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # make a semester_number
+    semester_number = db.Column(db.Integer)
+    # make a list of courses as a relationship
+    courses = db.relationship('Course')
 
 
 class User(db.Model, UserMixin):
@@ -43,3 +58,7 @@ class User(db.Model, UserMixin):
     class_standing = db.Column(db.String(10))
     # Each time a course is added, add to courses list in courses field (relationship = capital 'Course')
     courses = db.relationship('Course')
+    # Each time a semester is added, add to semesters list in semesters field (relationship = capital 'Semester')
+    semesters = db.relationship('Semester')
+    # Number of semesters
+    num_semesters = db.Column(db.Integer)

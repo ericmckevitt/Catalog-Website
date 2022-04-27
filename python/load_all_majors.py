@@ -1,4 +1,4 @@
-import codd
+from python import codd
 
 
 # Collect credentials for user and server

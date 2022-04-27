@@ -1,4 +1,7 @@
+from importlib.resources import path
 import codd
+import time
+import os
 
 
 # Collect credentials for user and server
@@ -12,11 +15,15 @@ port = codd.port
 dburi, insepctor = codd.connect(password)
 
 # Define table locations for convenience
-csci_courses = '../Schema/Courses/CSCICourses.csv'
+csci_courses = './Schema/Courses/CSCICourses.csv'
+eeng_courses = './Schema/Courses/EENGCourses.csv'
+all_courses = './Schema/Courses/all_courses_revised.csv'
+
+# csci_courses = '../Schema/Courses/CSCICourses.csv'
 
 
 # majors = [ [location, name], ... ]
-courses = [[csci_courses, 'csci_courses']]
+courses = [[all_courses, 'all_courses']]
 
 
 def drop_all_courses():
@@ -51,6 +58,14 @@ def load_all_courses():
     # Print table list
     print('-----------------------------------\nTable List After Insertions:')
     print(codd.get_tables(insepctor))
+
+
+def load_course(location, table_name):
+    try:
+        status = codd.create_and_populate(location, table_name, dburi)
+        print(status.strip())
+    except:
+        print(f'Error: file named {table_name} could not be found.')
 
 
 def main():

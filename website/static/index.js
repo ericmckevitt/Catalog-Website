@@ -19,6 +19,17 @@ function deleteCourse(courseId) {
     })
 }
 
+function deleteCourseFromSemester(course_id, semester_id) {
+    console.log(course_id, semester_id);
+    fetch('/delete-course-from-semester', {
+        method: 'POST',
+        body: JSON.stringify({ course_id: course_id, semester_id: semester_id })
+    }).then((_res) => {
+        // Refresh page by redirecting to same page
+        window.location.href = "/";
+    })
+}
+
 /**
  * 
  * @param {*} major 
@@ -37,5 +48,27 @@ function deleteMajor(major) {
     }).then((_res) => {
         // Refresh page by redirecting to same page
         window.location.href = "/account";
+    })
+}
+
+// implement deleteSemester function
+function deleteSemester(semester_id) {
+    fetch('/delete-semester', {
+        method: 'POST',
+        body: JSON.stringify({ semester_id: semester_id })
+    }).then((_res) => {
+        // Refresh page by redirecting to same page
+        window.location.href = "/";
+    })
+}
+
+// implement addSemester function
+function addSemester(semester) {
+    fetch('/add-semester', {
+        method: 'POST',
+        body: JSON.stringify({})
+    }).then((_res) => {
+        // Refresh page by redirecting to same page
+        window.location.href = "/";
     })
 }

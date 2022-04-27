@@ -1,4 +1,218 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content%}
 <br />
-<h1 style="text-align: center">Welcome, {{user.first_name}}.</h1>
+<h1 style="text-align: center; margin-bottom: 32px">
+    Welcome, {{user.first_name}}.
+</h1>
+
+<!-- Section to display all semesters -->
+<section class="semester-form-section">
+    <h3 align="center">Semesters</h3>
+    <ul class="list-group list-group-flush courses-taken-list" id="notes">
+        {% for semester in user.semesters %}
+
+        <li class="list-group-item semester-row">
+            <div class="row semester-title-row">
+                <div class="col" align="center">
+                    Semester {{semester.semester_number}}
+                </div>
+            </div>
+            <!-- Add extra padding if there are courses for this semester -->
+            {% if semester.courses %}
+            <div class="padding-above-courses"></div>
+            {% endif %}
+            <!-- For each course in the semester, render it as a row -->
+            {% for course in semester.courses %}
+            <div class="row semester-course-entry">
+                <div class="col-sm-2">
+                    {{course.department}}{{course.course_number}}
+                </div>
+                <div class="col-md-7">{{course.course_name}}</div>
+                <div class="col-sm-2">{{course.credit_hours}}</div>
+                <div class="col-sm-1">
+                    <button
+                        type="button"
+                        class="close"
+                        onClick="deleteCourseFromSemester({{ course.id }}, {{ semester.id }});"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- Button to edit semester name -->
+            <div class="row">
+                <div class="col-sm-12 edit-semester-name-row">
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary edit-semester-name-btn"
+                        data-toggle="modal"
+                        data-target="#editSemesterNameModal"
+                    >
+                        Edit Name
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary add-semester-btn delete-semester-btn"
+                        onClick="deleteSemester({{ semester.id }})"
+                    >
+                        <span aria-hidden="true">Delete Semester</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- If there is at least one course, display the semester's total credit hour count -->
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!--  Form to add new semester to user -->
+    <button
+        type="button"
+        class="btn btn-primary add-semester-btn"
+        onClick="addSemester()"
+    >
+        <span aria-hidden="true">Add Semester</span>
+    </button>
+</section>
+
+<!-- Button and Modal for Add Course to Semester -->
+<!-- Button trigger modal -->
+<button
+    type="button"
+    class="btn btn-primary"
+    data-toggle="modal"
+    data-target="#addCourseModal"
+>
+    Add Course to Semester
+</button>
+
+<!-- Add Course Modal -->
+<div
+    class="modal fade"
+    id="addCourseModal"
+    tabindex="-1"
+    aria-labelledby="addCourseModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCourseModalLabel">
+                    Add Course to Semester
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- TODO: Change modal body background color so that it doesn't match the surrounding elements -->
+            <div class="modal-body">
+                <!-- Form to submit a new course to particular semester -->
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="department"
+                            name="department"
+                            placeholder="Enter the course's department (ex. CSCI)"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="course_number">Course Number</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="course_number"
+                            name="course_number"
+                            placeholder="Enter the course's course number (ex. 101)"
+                        />
+                    </div>
+                    <!-- Selector for semester -->
+                    <div class="form-group">
+                        <label for="department">Semester</label>
+                        <select
+                            name="semester"
+                            id="semester"
+                            class="form-control form-control-sm"
+                            aria-label=".form-select-sm example"
+                            size="1"
+                        >
+                            <option selected value="None">
+                                Select a Semester
+                            </option>
+                            <!-- add an option for each semester -->
+                            {% for semester in user.semesters %}
+                            <option value="{{semester.id}}">
+                                Semester {{semester.semester_number}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="modal-footer" style="margin: auto !important">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Add Course
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Semester Name Modal -->
+<div
+    class="modal fade"
+    id="editSemesterNameModal"
+    tabindex="-1"
+    aria-labelledby="editSemesterNameModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSemesterNameModalLabel">
+                    Edit Semester Name
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- TODO: Change modal body background color so that it doesn't match the surrounding elements -->
+            <div class="modal-body">...</div>
+            <div class="modal-footer" style="margin: auto !important">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Remove these later, just adding extra margin to the bottom of the page for better styling -->
+<div class="margin-below-page"></div>
+<div class="margin-below-page"></div>
+
 {% endblock %}

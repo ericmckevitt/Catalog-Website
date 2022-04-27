@@ -84,6 +84,13 @@ span.x {
     margin-bottom: 18px;
 }
 
+.semester-form-section {
+    padding: 22px;
+    border-radius: 12px;
+    background-color: var(--very-light-blue);
+    margin-bottom: 18px;
+}
+
 .courses-taken-list {
     margin-top: 16px;
 }
@@ -95,6 +102,71 @@ span.x {
 .courses-taken-column-names .row :first-child {
     /* border-right: 1px solid #515662; */
     border-left: none;
+}
+
+.add-semester-btn {
+    margin-top: 16px !important;
+}
+
+.semester-row {
+    margin-top: 16px;
+}
+
+.semester-title-row {
+    /* padding-bottom: 12px !important; */
+    padding: 6px 0px;
+}
+
+.padding-above-courses {
+    margin-top: 10px;
+    border-bottom: 0.5px solid #515662;
+    margin-bottom: 10px;
+}
+
+/* .semester-title-row:after {
+    content: "";
+    height: 40px;
+} */
+
+
+.semester-course-entry {
+    margin-top: 8px;
+}
+
+.edit-semester-name-row {
+    display: flex;
+    flex-direction: row;
+
+    /* Center all child elements */
+    align-items: center;
+    justify-content: center !important;
+
+
+    
+}
+
+.edit-semester-name-btn {
+    /* center button within parent */
+    align-self: center;
+    justify-self: center;
+    /* margin: auto !important; */
+
+    margin-top: 12px !important;
+    margin-bottom: 6px !important;
+    margin-right: 6px;
+    width: 150px; 
+}
+
+.delete-semester-btn {
+    /* center button within parent */
+    align-self: center;
+    justify-self: center;
+    /* margin: auto !important; */
+
+    margin-top: 12px !important;
+    margin-bottom: 6px !important;
+    margin-left: 6px;
+    width: 150px;
 }
 
 /* Medium Screens and Wider */

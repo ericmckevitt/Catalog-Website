@@ -223,6 +223,13 @@ class Schedule:
 
     # Revised version of the above function. Keep the above function now just in case.
     def validate_schedule(self):
+
+        # JUST FOR DEBUGGING
+        for semester in self.semesters:
+            print(semester.get_name())
+            for course in semester.get_courses():
+                print("\t", course)
+
         is_valid = True
         # Look at each semester
         for semester_number, semester in enumerate(self.semesters):

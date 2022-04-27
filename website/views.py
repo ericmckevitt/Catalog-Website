@@ -430,6 +430,11 @@ def validate_schedule():
         else:
             flash(f'Schedule is invalid! {error_msg}', category='error')
 
+        # Get the class that is part of the error (word after "invalid!")
+        if error_msg is not None and error_msg != '':
+            error_class = error_msg.split(' ')[0]
+            print(error_class)
+
     return jsonify({})
 
 

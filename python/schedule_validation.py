@@ -269,7 +269,7 @@ class Schedule:
                             # Check if any of the prerequisite options have been fulfilled
                             if not option_fufilled:
                                 is_valid = False
-                                error_msg = f"{course.get_name()} is not valid. You have not taken any of the following prerequisites:"
+                                error_msg = f"{course.get_dep_cn()} is not valid. You have not taken any of the following prerequisites:"
                                 print(error_msg)
                                 for item in prerequisite:
                                     if type(item) == str:
@@ -293,7 +293,7 @@ class Schedule:
 
                             if not foundCourse:
                                 is_valid = False
-                                error_msg = f"{course.get_name()} is not valid. You have not taken {prerequisite}."
+                                error_msg = f"{course.get_dep_cn().strip()} is not valid. You have not taken its prerequisite, {prerequisite}."
                                 print(error_msg)
                                 return is_valid, error_msg
 
@@ -329,7 +329,7 @@ class Schedule:
                             # Check if any of the prerequisite options have been fulfilled
                             if not option_fufilled:
                                 is_valid = False
-                                error_msg = f"{course.get_name()} is not valid. You have not taken any of the following corequisites:"
+                                error_msg = f"{course.get_dep_cn().strip()} is not valid. You have not taken any of the following corequisites:"
                                 print(error_msg)
                                 for item in corequisite:
                                     if type(item) == str:
@@ -372,7 +372,7 @@ class Schedule:
 
                             if not foundCourse:
                                 is_valid = False
-                                error_msg = f"{course.get_name()} is not valid. You have not taken {corequisite}."
+                                error_msg = f"{course.get_dep_cn().strip()} is not valid. You have not taken its corequisite, {corequisite}."
                                 print(error_msg)
                                 return is_valid, error_msg
 

@@ -1,6 +1,6 @@
 from tabnanny import check
 from unicodedata import category
-from winreg import REG_QWORD
+# from winreg import REG_QWORD
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User, Course, Semester
 from werkzeug.security import generate_password_hash, check_password_hash

@@ -1,5 +1,3 @@
-import pytest
-import sys
 
 def add_two(x):
     return x+2

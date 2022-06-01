@@ -1,4 +1,6 @@
-from python import codd
+import sys
+# changed from: from python import codd
+from . import codd
 
 
 # Collect credentials for user and server

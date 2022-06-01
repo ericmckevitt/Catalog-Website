@@ -2,9 +2,9 @@ from tabnanny import check
 from matplotlib.pyplot import table
 
 from numpy import require
-import codd
-import load_all_majors as maj
-import load_all_minors as min
+from . import codd
+from . import load_all_majors as maj
+from . import load_all_minors as min
 
 
 # Collect credentials for user and server

@@ -1,5 +1,5 @@
 from importlib.resources import path
-import codd
+from . import codd
 import time
 import os
 

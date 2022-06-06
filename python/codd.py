@@ -6,12 +6,18 @@ from sqlalchemy import column, create_engine, inspect, text
 import getpass
 
 # Script Globals
-username = 'emckevitt'
-password = ''
-server = 'codd.mines.edu'
-database = 'csci403'
-port = '5433'
+# username = 'emckevitt'
+# # password = ''
+# password = 'Mines6515'
+# server = 'codd.mines.edu'
+# database = 'csci403'
+# port = '5433'
 
+python_anywhere = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
+username = 'super'
+# password = ''
+password = '#McDownieBarton#999'
+port = '12702'
 
 # Set to True to see Queries before they are sent to server
 debugger = False
@@ -20,12 +26,12 @@ debugger = False
 
 
 def getLoginCredentials():
-    return [username, 'Mines6515']  # TODO Change this to function call
+    return [username, password]  # TODO Change this to function call
 
 
 # Returns a list of server connection parameters so other files can connect
-def getServerIdentifiers():
-    return [server, database, port]
+# def getServerIdentifiers():
+#     return [server, database, port]
 
 
 def collect_password():
@@ -38,7 +44,8 @@ def collect_password():
 
 def connect(password):
     # Connect to DBMS
-    dburi = f'postgresql://{username}:{password}@{server}:{port}/{database}'
+    # dburi = f'postgresql://{username}:{password}@{server}:{port}/{database}'
+    dburi = python_anywhere
     inspector = inspect(create_engine(dburi))
     return dburi, inspector
 
@@ -227,14 +234,14 @@ def update_table(table_name, file):
 # Copy table data from one table to another
 
 
-def copy_table(original, new_table, dburi=connect('Mines6515')):
+def copy_table(original, new_table, dburi=connect(password)):
     original_table = read_query("SELECT * FROM {original}", dburi)
     # TODO Implement rest of algorithm
 
 # Copies table into another and drops original
 
 
-def rename_table(original, new_table, dburi=connect('Mines6515')):
+def rename_table(original, new_table, dburi=connect(password)):
     copy_table(original, new_table, dburi)
     drop(original, dburi)
     # TODO: Only use this if we actually implement copy_table()
@@ -252,13 +259,13 @@ def get_course_info(dep, cn, dburi):
 
 
 # Save connection and inspector globally so that params can have default
-dburi, inspector = connect('Mines6515')
+dburi, inspector = connect(password)
 
 
 def main():
     # Collect credentials and log into DB
     # password = collect_password()  # TODO Uncomment
-    dburi, inspector = connect('Mines6515')  # TODO Use password variable
+    dburi, inspector = connect(password)  # TODO Use password variable
 
     # drop('cam_major', dburi)
 

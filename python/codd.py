@@ -80,24 +80,27 @@ def connect(password):
     # Connect to DBMS
     # dburi = f'postgresql://{username}:{PASSWORD}@{server}:{port}/{database}'
 
-    sshtunnel.SSH_TIMEOUT = 5.0
-    sshtunnel.TUNNEL_TIMEOUT = 5.0
+    # sshtunnel.SSH_TIMEOUT = 5.0
+    # sshtunnel.TUNNEL_TIMEOUT = 5.0
     
-    DEBUG = False
-    if (DEBUG == True): # Connect to psql server with SSH
-        with sshtunnel.SSHTunnelForwarder(
-            ('ssh.pythonanywhere.com'), 
-            ssh_username=PA_USERNAME, 
-            ssh_password=PA_PASSWORD,
-            remote_bind_address=(SERVER, PORT)
-        ) as tunnel:
-            dburi = SQLALCHEMY_DATABASE_URI
-            inspector = inspect(create_engine(dburi))
-            return dburi, inspector 
-    else:   # Establish a connection directly
-        dburi = SQLALCHEMY_DATABASE_URI
-        inspector = inspect(create_engine(dburi))
-        return dburi, inspector
+    # DEBUG = False
+    # if (DEBUG == True): # Connect to psql server with SSH
+    #     with sshtunnel.SSHTunnelForwarder(
+    #         ('ssh.pythonanywhere.com'), 
+    #         ssh_username=PA_USERNAME, 
+    #         ssh_password=PA_PASSWORD,
+    #         remote_bind_address=(SERVER, PORT)
+    #     ) as tunnel:
+    #         dburi = SQLALCHEMY_DATABASE_URI
+    #         inspector = inspect(create_engine(dburi))
+    #         return dburi, inspector 
+    # else:   # Establish a connection directly
+    #     dburi = SQLALCHEMY_DATABASE_URI
+    #     inspector = inspect(create_engine(dburi))
+    #     return dburi, inspector
+    dburi = SQLALCHEMY_DATABASE_URI
+    inspector = inspect(create_engine(dburi))
+    return dburi, inspector
         
 
 

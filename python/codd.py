@@ -4,20 +4,54 @@ import pandas as pd
 from pandas import Series, DataFrame
 from sqlalchemy import column, create_engine, inspect, text
 import getpass
+import sshtunnel
+from sshtunnel import SSHTunnelForwarder
 
 # Script Globals
 # username = 'emckevitt'
-# # password = ''
-# password = 'Mines6515'
+# # PASSWORD = ''
+# PASSWORD = 'Mines6515'
 # server = 'codd.mines.edu'
 # database = 'csci403'
 # port = '5433'
 
-python_anywhere = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
-username = 'super'
-# password = ''
-password = '#McDownieBarton#999'
-port = '12702'
+"""
+import psycopg2
+import sshtunnel
+
+sshtunnel.SSH_TIMEOUT = 5.0
+sshtunnel.TUNNEL_TIMEOUT = 5.0
+
+with sshtunnel.SSHTunnelForwarder(
+    ('ssh.pythonanywhere.com'),
+    ssh_username='your PythonAnywhere username', ssh_PASSWORD='the PASSWORD you use to log in to the PythonAnywhere website',
+    remote_bind_address=('your PythonAnywhere database hostname, eg. yourusername-1234.postgres.pythonanywhere-services.com', the port on the databases page)
+) as tunnel:
+    connection = psycopg2.connect(
+        user='a postgres user', PASSWORD='PASSWORD for the postgres user',
+        host='127.0.0.1', port=tunnel.local_bind_port,
+        database='your database name',
+    )
+    # Do stuff
+    connection.close()
+"""
+
+# SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:yyy@xxx-66.postgres.pythonanywhere-services.com:10066/seekwell'
+# BASE_PATH = '/home/xxx/seekwell/'
+# db = sqlalchemy.create_engine(SQLALCHEMY_DATABASE_URI)
+# SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{PASSWORD}@{server}:{port}/{database}'
+# SQLALCHEMY_DATABASE_URI = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
+# dburi = f'postgresql://{username}:{PASSWORD}@{server}:{port}/{database}'
+
+SERVER = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
+BASE_PATH = '/home/brandonbarton/Catalog-Website/'
+DB = 'Catalog-Website'
+USERNAME = 'super'
+PA_USERNAME = 'brandonbarton'
+PASSWORD = '#McDownieBarton#999'
+PA_PASSWORD = '$McDownieBarton$300'
+PORT = 12702
+SQLALCHEMY_DATABASE_URI = f'postgresql://{PA_USERNAME}:{PASSWORD}@{SERVER}:{PORT}/{DB}'
 
 # Set to True to see Queries before they are sent to server
 debugger = False
@@ -26,7 +60,7 @@ debugger = False
 
 
 def getLoginCredentials():
-    return [username, password]  # TODO Change this to function call
+    return [USERNAME, PASSWORD]  # TODO Change this to function call
 
 
 # Returns a list of server connection parameters so other files can connect
@@ -36,7 +70,7 @@ def getLoginCredentials():
 
 def collect_password():
     try:
-        # password = getpass.getpass()
+        # PASSWORD = getpass.getpass()
         return getpass.getpass()
     except Exception as e:
         print('Error:', e)
@@ -44,10 +78,30 @@ def collect_password():
 
 def connect(password):
     # Connect to DBMS
-    # dburi = f'postgresql://{username}:{password}@{server}:{port}/{database}'
-    dburi = python_anywhere
-    inspector = inspect(create_engine(dburi))
-    return dburi, inspector
+    # dburi = f'postgresql://{username}:{PASSWORD}@{server}:{port}/{database}'
+
+    sshtunnel.SSH_TIMEOUT = 5.0
+    sshtunnel.TUNNEL_TIMEOUT = 5.0
+    
+    DEBUG = False
+    if (DEBUG == True): # Connect to psql server with SSH
+        with sshtunnel.SSHTunnelForwarder(
+            ('ssh.pythonanywhere.com'), 
+            ssh_username=PA_USERNAME, 
+            ssh_password=PA_PASSWORD,
+            remote_bind_address=(SERVER, PORT)
+        ) as tunnel:
+            dburi = SQLALCHEMY_DATABASE_URI
+            inspector = inspect(create_engine(dburi))
+            return dburi, inspector 
+    else:   # Establish a connection directly
+        dburi = SQLALCHEMY_DATABASE_URI
+        inspector = inspect(create_engine(dburi))
+        return dburi, inspector
+        
+
+
+    
 
 
 def get_tables(inspector):
@@ -234,14 +288,14 @@ def update_table(table_name, file):
 # Copy table data from one table to another
 
 
-def copy_table(original, new_table, dburi=connect(password)):
+def copy_table(original, new_table, dburi=connect(PASSWORD)):
     original_table = read_query("SELECT * FROM {original}", dburi)
     # TODO Implement rest of algorithm
 
 # Copies table into another and drops original
 
 
-def rename_table(original, new_table, dburi=connect(password)):
+def rename_table(original, new_table, dburi=connect(PASSWORD)):
     copy_table(original, new_table, dburi)
     drop(original, dburi)
     # TODO: Only use this if we actually implement copy_table()
@@ -259,13 +313,13 @@ def get_course_info(dep, cn, dburi):
 
 
 # Save connection and inspector globally so that params can have default
-dburi, inspector = connect(password)
+dburi, inspector = connect(PASSWORD)
 
 
 def main():
     # Collect credentials and log into DB
-    # password = collect_password()  # TODO Uncomment
-    dburi, inspector = connect(password)  # TODO Use password variable
+    # PASSWORD = collect_PASSWORD()  # TODO Uncomment
+    dburi, inspector = connect(PASSWORD)  # TODO Use PASSWORD variable
 
     # drop('cam_major', dburi)
 

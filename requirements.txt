@@ -6,3 +6,4 @@ parso
 requests
 matplotlib
 pytest
+sshtunnel

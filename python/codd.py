@@ -51,7 +51,8 @@ PA_USERNAME = 'brandonbarton'
 PASSWORD = '#McDownieBarton#999'
 PA_PASSWORD = '$McDownieBarton$300'
 PORT = 12702
-SQLALCHEMY_DATABASE_URI = f'postgresql://{USERNAME}:{PASSWORD}@{SERVER}:{PORT}/{DB}'
+# SQLALCHEMY_DATABASE_URI = f'postgresql://{USERNAME}:{PASSWORD}@{SERVER}:{PORT}/{DB}'
+SQLALCHEMY_DATABASE_URI = f'postgresql://{USERNAME}:{PASSWORD}@{SERVER}:{PORT}'
 
 # Set to True to see Queries before they are sent to server
 debugger = False

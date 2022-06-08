@@ -45,7 +45,7 @@ with sshtunnel.SSHTunnelForwarder(
 
 server = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
 base_path = '/home/brandonbarton/Catalog-Website/'
-database = 'test_database'
+database = 'test_db'
 username = 'test_user'
 PA_username = 'brandonbarton'
 password = '$McDownieBarton$900'

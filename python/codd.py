@@ -45,14 +45,14 @@ with sshtunnel.SSHTunnelForwarder(
 
 SERVER = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
 BASE_PATH = '/home/brandonbarton/Catalog-Website/'
-DB = 'Catalog-Website'
-USERNAME = 'super'
+DB = 'test_db'
+USERNAME = 'test_user'
 PA_USERNAME = 'brandonbarton'
-PASSWORD = '#McDownieBarton#999'
+PASSWORD = '#McDownieBarton#300'
 PA_PASSWORD = '$McDownieBarton$300'
 PORT = 12702
-# SQLALCHEMY_DATABASE_URI = f'postgresql://{USERNAME}:{PASSWORD}@{SERVER}:{PORT}/{DB}'
-SQLALCHEMY_DATABASE_URI = f'postgresql://{USERNAME}:{PASSWORD}@{SERVER}:{PORT}'
+SQLALCHEMY_DATABASE_URI = f'postgresql://{USERNAME}:{PASSWORD}@{SERVER}:{PORT}/{DB}'
+# SQLALCHEMY_DATABASE_URI = f'postgresql://{USERNAME}:{PASSWORD}@{SERVER}:{PORT}'
 
 # Set to True to see Queries before they are sent to server
 debugger = False

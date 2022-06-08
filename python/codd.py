@@ -38,20 +38,20 @@ with sshtunnel.SSHTunnelForwarder(
 
 # SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:yyy@xxx-66.postgres.pythonanywhere-services.com:10066/seekwell'
 # base_path = '/home/xxx/seekwell/'
-# db = sqlalchemy.create_engine(SQLALCHEMY_DATABASE_URI)
+# database = sqlalchemy.create_engine(SQLALCHEMY_DATABASE_URI)
 # SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@{server}:{port}/{database}'
 # SQLALCHEMY_DATABASE_URI = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
-# dburi = f'postgresql://{username}:{password}@{server}:{port}/{database}'
+# databaseuri = f'postgresql://{username}:{password}@{server}:{port}/{database}'
 
 server = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
 base_path = '/home/brandonbarton/Catalog-Website/'
-db = 'test_db'
+database = 'test_database'
 username = 'test_user'
 PA_username = 'brandonbarton'
 password = '$McDownieBarton$900'
 PA_password = '$McDownieBarton$300'
 port = 12702
-SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@{server}:{port}/{db}'
+SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@{server}:{port}/{database}'
 # SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@{server}:{port}'
 
 # Set to True to see Queries before they are sent to server
@@ -78,8 +78,8 @@ def collect_password():
 
 
 def connect(password):
-    # Connect to dbMS
-    # dburi = f'postgresql://{username}:{password}@{server}:{port}/{database}'
+    # Connect to databaseMS
+    # databaseuri = f'postgresql://{username}:{password}@{server}:{port}/{database}'
 
     # sshtunnel.SSH_TIMEOUT = 5.0
     # sshtunnel.TUNNEL_TIMEOUT = 5.0
@@ -92,16 +92,16 @@ def connect(password):
     #         ssh_password=PA_password,
     #         remote_bind_address=(server, port)
     #     ) as tunnel:
-    #         dburi = SQLALCHEMY_DATABASE_URI
-    #         inspector = inspect(create_engine(dburi))
-    #         return dburi, inspector 
+    #         databaseuri = SQLALCHEMY_DATABASE_URI
+    #         inspector = inspect(create_engine(databaseuri))
+    #         return databaseuri, inspector 
     # else:   # Establish a connection directly
-    #     dburi = SQLALCHEMY_DATABASE_URI
-    #     inspector = inspect(create_engine(dburi))
-    #     return dburi, inspector
-    dburi = SQLALCHEMY_DATABASE_URI
-    inspector = inspect(create_engine(dburi))
-    return dburi, inspector
+    #     databaseuri = SQLALCHEMY_DATABASE_URI
+    #     inspector = inspect(create_engine(databaseuri))
+    #     return databaseuri, inspector
+    databaseuri = SQLALCHEMY_DATABASE_URI
+    inspector = inspect(create_engine(databaseuri))
+    return databaseuri, inspector
         
 
 
@@ -153,7 +153,7 @@ def read_csv_data(filename):
     return return_types, data
 
 
-def store_csv_in_dbms(filename, table_name, dburi):
+def store_csv_in_databasems(filename, table_name, databaseuri):
     # Convert csv to dataframe
     types, data = read_csv_data(filename)
 
@@ -183,13 +183,13 @@ def store_csv_in_dbms(filename, table_name, dburi):
         print('Create Query:\n', create_query)
 
     # Sends query to server
-    read_query(create_query, dburi)
+    read_query(create_query, databaseuri)
 
 
-# filename is csv input, table_name is dbMS table output, dburi is dbMS connection
+# filename is csv input, table_name is databaseMS table output, databaseuri is databaseMS connection
 
 
-def insert_csv_into_table(filename, table_name, dburi):
+def insert_csv_into_table(filename, table_name, databaseuri):
     # Convert csv to dataframe
     types, data = read_csv_data(filename)
 
@@ -244,35 +244,35 @@ def insert_csv_into_table(filename, table_name, dburi):
     if debugger:
         print("Insert Query:\n", insert_query)
 
-    read_query(insert_query, dburi)
+    read_query(insert_query, databaseuri)
 
 
-def read_query(query, dburi):
+def read_query(query, databaseuri):
     try:
         # You can catch this return if you want
-        return pd.read_sql_query(query, dburi)
+        return pd.read_sql_query(query, databaseuri)
     except:
         pass
 
 
-def drop(table_name, dburi):
-    read_query(f"DROP TABLE IF EXISTS {table_name};", dburi)
+def drop(table_name, databaseuri):
+    read_query(f"DROP TABLE IF EXISTS {table_name};", databaseuri)
 
 # Creates table and inserts from csv in one function call
 
 
-def create_and_populate(filename, table_name, dburi):
+def create_and_populate(filename, table_name, databaseuri):
     # Drop table if exists
-    drop(table_name, dburi)
+    drop(table_name, databaseuri)
 
     # Create table
-    store_csv_in_dbms(filename, table_name, dburi)
+    store_csv_in_databasems(filename, table_name, databaseuri)
     # Insert data from csv (filename) into table
-    insert_csv_into_table(filename, table_name, dburi)
+    insert_csv_into_table(filename, table_name, databaseuri)
 
     # Check dimensions of table to see if insertion worked
     try:
-        table = read_query(f"SELECT * FROM {table_name};", dburi)
+        table = read_query(f"SELECT * FROM {table_name};", databaseuri)
 
         if table.shape[0] == 0:
             return f"\nWARNING: '{table_name}' was created with zero rows.\n"
@@ -286,57 +286,57 @@ def create_and_populate(filename, table_name, dburi):
 
 def update_table(table_name, file):
     # Drop, create and insert into from a csv
-    drop(table_name, dburi)
-    create_and_populate(file, table_name, dburi)
+    drop(table_name, databaseuri)
+    create_and_populate(file, table_name, databaseuri)
 
 # Copy table data from one table to another
 
 
-def copy_table(original, new_table, dburi=connect(password)):
-    original_table = read_query("SELECT * FROM {original}", dburi)
+def copy_table(original, new_table, databaseuri=connect(password)):
+    original_table = read_query("SELECT * FROM {original}", databaseuri)
     # TODO Implement rest of algorithm
 
 # Copies table into another and drops original
 
 
-def rename_table(original, new_table, dburi=connect(password)):
-    copy_table(original, new_table, dburi)
-    drop(original, dburi)
+def rename_table(original, new_table, databaseuri=connect(password)):
+    copy_table(original, new_table, databaseuri)
+    drop(original, databaseuri)
     # TODO: Only use this if we actually implement copy_table()
 
 # Takes in DEP+CN and returns all information on this course as a dataframe
 
 
-def get_course_info(dep, cn, dburi):
+def get_course_info(dep, cn, databaseuri):
     # Query for course
     query = f"SELECT * FROM {dep.lower()}_courses WHERE department = '{dep}' AND course_number = {int(cn)};"
     # query = "SELECT * FROM csci_courses;"
     print(query)
     # Return result of query
-    return read_query(query, dburi)
+    return read_query(query, databaseuri)
 
 
 # Save connection and inspector globally so that params can have default
-dburi, inspector = connect(password)
+databaseuri, inspector = connect(password)
 
 
 def main():
-    # Collect credentials and log into db
+    # Collect credentials and log into database
     # password = collect_password()  # TODO Uncomment
-    dburi, inspector = connect(password)  # TODO Use password variable
+    databaseuri, inspector = connect(password)  # TODO Use password variable
 
-    # drop('cam_major', dburi)
+    # drop('cam_major', databaseuri)
 
-    # status = create_and_populate('./Schema/Majors/CAMMajor.csv', 'cam_major', dburi)
+    # status = create_and_populate('./Schema/Majors/CAMMajor.csv', 'cam_major', databaseuri)
     # print(status)
 
-    # store_csv_in_dbms('./Schema/Majors/CAMMajor.csv', 'cam_major', dburi)
+    # store_csv_in_databasems('./Schema/Majors/CAMMajor.csv', 'cam_major', databaseuri)
 
     # Print list of tables
     # print('\nTables:', get_tables(inspector))
     # print()
 
-    course_info = get_course_info('CSCI', '406', dburi)
+    course_info = get_course_info('CSCI', '406', databaseuri)
     print(course_info)
 
 

@@ -1,6 +1,6 @@
 from email.policy import default
 from enum import unique
-from . import db
+from .__init__ import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
@@ -22,6 +22,8 @@ class Course(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     # Foreign key relationship on semester.id (1 semester to Many courses relationship) (FK = lowercase 'semester')
     semester_id = db.Column(db.Integer, db.ForeignKey('semester.id'))
+
+    # addCourse(id, department, course_number, course_name, credit_hours, is_taken, user_id, semester_id)
 
 
 class Semester(db.Model):

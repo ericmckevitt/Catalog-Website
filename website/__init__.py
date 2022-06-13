@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+#from . import db_controller as controller
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -18,6 +19,7 @@ def create_app():
     # Initialize DB
     db.init_app(app)
 
+
     # Import views
     from .views import views
     from .auth import auth
@@ -31,6 +33,8 @@ def create_app():
 
     # Create database (if not exists)
     create_database(app)
+
+
 
     login_manager = LoginManager()
     # Set location to redirect user if not logged in

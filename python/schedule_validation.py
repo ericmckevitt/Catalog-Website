@@ -1,4 +1,4 @@
-from requests import PreparedRequest
+#from requests import PreparedRequest
 from . import process_courses as pc
 import time  # For testing time taken to validate schedule.
 

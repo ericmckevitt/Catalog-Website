@@ -1,3 +1,5 @@
+from asyncio.windows_events import NULL
+from multiprocessing import synchronize
 from tabnanny import check
 from unicodedata import category
 # from winreg import REG_QWORD
@@ -6,6 +8,7 @@ from .models import User, Course, Semester
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+from . import db_controller as controller
 
 # Initialize blueprint called auth
 auth = Blueprint('auth', __name__)
@@ -54,6 +57,50 @@ def logout():
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
+    # adding test users 1, 2, 3
+    if User.query.filter_by(cwid=10101010).count() == 1:
+        # testing, remove this later
+        #not sure if this woks yet
+        #db.session = 1
+        temp_user = User.query.filter_by(cwid=10101010).first()
+        merged_object = db.session.merge(temp_user)
+        db.session.delete(merged_object)
+        db.session.commit()
+    if User.query.filter_by(cwid=10101010).count() == 0:
+        controller.addUser(db, 10101010, 'testUser1@mines.edu', 'test1f', 'test1l', 'TEST MAJOR1', 69, 'Freshman', 'test1password')
+        #adding classes and semesters for user 1
+
+        user1 = User.query.filter_by(cwid=10101010).first()
+        user1_id = user1.id # getting the user id
+        print(user1_id)
+
+        semester_number = 1 # number for this specific user
+
+        semester_id = Semester.query.count() + semester_number + 1 # getting semeseter id, +1 because we want the next one
+        semester_name = "testUser1 semester #" + str(semester_number)
+
+        courses = [] # courses empty for now
+
+        # add_semester(db, id, semester_name, user_id, semester_number, courses)
+        # making sure there is no duplicates
+        controller.delete_semesters_by_name(db, "testUser1 semester #1")
+        controller.delete_semesters_by_null_id(db)
+
+        controller.add_semester(db, semester_id, semester_name, user1_id, semester_number, courses)
+
+        #user1.add_semester()
+
+    if User.query.filter_by(cwid=20202020).count() == 0:
+        controller.addUser(db, 20202020, 'testUser2@mines.edu', 'test2f', 'test2l', 'TEST MAJOR2', 420, 'Sophomore', 'test2password')
+    if User.query.filter_by(cwid=30303030).count() == 0:
+        controller.addUser(db, 30303030, 'testUser3@mines.edu', 'test3f', 'test3l', 'TEST MAJOR3', 69420, 'Junior', 'test3password')
+
+    
+        #adding classes and semesters for user 2
+
+        #adding classes and semesters for user 3
+    #
+
     if request.method == 'POST':
         # Collect form data from POST request
         cwid = request.form.get('cwid')

@@ -14,11 +14,11 @@ port = codd.port
 dburi, inspector = codd.connect(password)
 
 # Define table locations for convenience
-csci_major = '../Schema/Majors/CSCIMajor.csv'
-am_major = '../Schema/Majors/AMMajor.csv'
-stat_major = '../Schema/Majors/STATMajor.csv'
-ceen_major = '../Schema/Majors/CEENMajor.csv'
-phgn_major = '../Schema/Majors/PHGNMajor.csv'
+csci_major = './Schema/Majors/CSCIMajor.csv'
+am_major = './Schema/Majors/AMMajor.csv'
+stat_major = './Schema/Majors/STATMajor.csv'
+ceen_major = './Schema/Majors/CEENMajor.csv'
+phgn_major = './Schema/Majors/PHGNMajor.csv'
 
 # majors = [ [location, name], ... ]
 majors = [[csci_major, 'csci_major'], [

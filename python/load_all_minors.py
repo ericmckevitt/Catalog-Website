@@ -12,13 +12,13 @@ port = codd.port
 dburi, inspector = codd.connect(password)
 
 # Define table locations for convenience
-csci_minor1 = '../Schema/Minors/CSCIMinor1.csv'
-csci_minor2 = '../Schema/Minors/CSCIMinor2.csv'
-compeng_minor = '../Schema/Minors/COMPENGMinor.csv'
-dsci_minor1 = '../Schema/Minors/DSCIMinor1.csv'
-dsci_minor2 = '../Schema/Minors/DSCIMinor2.csv'
-dsci_minor_electives = '../Schema/Minors/DSCIMinorElectives.csv'
-robotics_minor = '../Schema/Minors/ROBOTICSMinor.csv'
+csci_minor1 = './Schema/Minors/CSCIMinor1.csv'
+csci_minor2 = './Schema/Minors/CSCIMinor2.csv'
+compeng_minor = './Schema/Minors/COMPENGMinor.csv'
+dsci_minor1 = './Schema/Minors/DSCIMinor1.csv'
+dsci_minor2 = './Schema/Minors/DSCIMinor2.csv'
+dsci_minor_electives = './Schema/Minors/DSCIMinorElectives.csv'
+robotics_minor = './Schema/Minors/ROBOTICSMinor.csv'
 
 # majors = [ [location, name], ... ]
 minors = [[csci_minor1, 'csci_minor1'], [

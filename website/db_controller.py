@@ -1,4 +1,5 @@
-from asyncio.windows_events import NULL
+# from asyncio.windows_events import NULL
+# from sqlalchemy import null
 from .models import User, Semester
 from werkzeug.security import generate_password_hash
 
@@ -26,7 +27,7 @@ def delete_semesters_by_name(db, semester_name_input):
         db.session.delete(merged_object)
         db.session.commit()
 def delete_semesters_by_null_id(db):
-    semesters_to_delete = Semester.query.filter_by(user_id = NULL).all()
+    semesters_to_delete = Semester.query.filter_by(user_id = None).all()
     for semester in semesters_to_delete:
         merged_object = db.session.merge(semester)
         db.session.delete(merged_object)

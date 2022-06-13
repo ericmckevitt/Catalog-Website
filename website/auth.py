@@ -51,6 +51,14 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
+@auth.route('/explore')
+@login_required
+def explore():
+    # @login_required : asserts that user can't access page until logged in
+    # Send user to explore page
+    message = "Welcome to the explore page. Please feel free to explore programs, and check your degree progress."
+    flash(message, category='success')
+    return render_template("explore.html", user=current_user)
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():

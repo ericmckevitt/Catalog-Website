@@ -1,0 +1,96 @@
+{% extends "base.html" %} {% block title %}Explore{% endblock %} {% block
+    content%}
+    <!-- Description: -->
+    <!-- Explore page will allow users to explore major, minor and track of study. -->
+    <!-- While the schedule workspace page is much more static, the explore page will -->
+    <!-- be much more dynamic, allowing users to explore academic tracks of interest.-->
+    
+    <!-- Explore Page Heading -->
+    <h1 style="text-align: center; padding: 25px 0px">Explore</h1>
+    
+    <!-- Set Major Form -->
+    <section class="account-major-form-section">
+        <form method="POST">
+            <!-- Only display if Major has not been set yet -->
+            <h3 align="center">Set your Major:</h3>
+            <div class="form-group set-major-form">
+                <label for="department">Major</label>
+                <select
+                    name="major"
+                    id="major"
+                    class="form-control form-control-sm"
+                    aria-label=".form-select-sm example"
+                    size="1"
+                >
+                    <option selected value="None">Select Your Major</option>
+                    <option value="Computer Science">
+                        Computer Science</option>
+                    <option value="EE">
+                        Electrical Engineering
+                    </option>
+                    <option value="Applied Mathematics">
+                        Applied Mathematics
+                    </option>
+                    <option value="Physics">
+                        Engineering Physics
+                    </option>
+                </select>
+            </div>
+            <div align="center">
+                <button type="submit" class="btn btn-primary">Set Major</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Set Track Form -->
+    <section class="account-track-form-section">
+        <form method="POST">
+            <!-- Only display if Track has not been set yet -->
+            <h3 align="center">Select your Track:</h3>
+            <div class="form-group set-track-form">
+                <label for="department">Track</label>
+                <select
+                    name="track"
+                    id="track"
+                    class="form-control form-control-sm"
+                    aria-label=".form-select-sm example"
+                    size="1"
+                >
+                    <option selected value="None">Select Your Track</option>
+                    <option value="Computer Science">
+                        Computer Science
+                    </option>
+                    <option value="Computer Science + Business">
+                        Business
+                    </option>
+                    <option value="Computer Science + Computer Engineering">
+                        Computer Engineering
+                    </option>
+                    <option value="Computer Science + Data Science">
+                        Data Science
+                    </option>
+                    <option value="Computer Science + Research Honors">
+                        Research Honors
+                    </option>
+                    <option value="Computer Science + Robotics and Intelligent Systems">
+                        Robotics and Intelligent Systems
+                    </option>
+                    <option value="Computer Science + Space">
+                        Space
+                    </option>
+                </select>
+            </div>
+            <div align="center">
+                <button type="submit" class="btn btn-primary">Set Track</button>
+            </div>
+        </form>
+    </section>
+    
+   
+    
+    <!-- Remove these later, just adding extra margin to the bottom of the page for better styling -->
+    <div class="margin-below-page"></div>
+    <div class="margin-below-page"></div>
+    
+    {% endblock %}
+    

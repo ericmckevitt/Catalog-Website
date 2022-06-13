@@ -36,13 +36,6 @@ with sshtunnel.SSHTunnelForwarder(
     connection.close()
 """
 
-# SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:yyy@xxx-66.postgres.pythonanywhere-services.com:10066/seekwell'
-# base_path = '/home/xxx/seekwell/'
-# database = sqlalchemy.create_engine(SQLALCHEMY_DATABASE_URI)
-# SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@{server}:{port}/{database}'
-# SQLALCHEMY_DATABASE_URI = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
-# databaseuri = f'postgresql://{username}:{password}@{server}:{port}/{database}'
-
 server = 'brandonbarton-2702.postgres.pythonanywhere-services.com'
 base_path = '/home/brandonbarton/Catalog-Website/'
 database = 'test_db'
@@ -52,7 +45,6 @@ password = '$McDownieBarton$900'
 PA_password = '$McDownieBarton$300'
 port = 12702
 SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@{server}:{port}/{database}'
-# SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@{server}:{port}'
 
 # Set to True to see Queries before they are sent to server
 debugger = False

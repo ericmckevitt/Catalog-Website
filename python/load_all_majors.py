@@ -11,7 +11,7 @@ database = codd.database
 port = codd.port
 
 # Connect to codd
-dburi, insepctor = codd.connect(password)
+dburi, inspector = codd.connect(password)
 
 # Define table locations for convenience
 csci_major = '../Schema/Majors/CSCIMajor.csv'
@@ -39,13 +39,13 @@ def drop_all_majors():
     for major in majors:
         codd.drop(major[1], dburi)
 
-    print('Tables:', codd.get_tables(insepctor))
+    print('Tables:', codd.get_tables(inspector))
 
 
 def load_all_majors():
     # Print table list
     print('Original Table List:')
-    print(codd.get_tables(insepctor),
+    print(codd.get_tables(inspector),
           end='\n-----------------------------------\n')
     # Create tables and insert for each major
     for major in majors:
@@ -60,7 +60,7 @@ def load_all_majors():
 
     # Print table list
     print('-----------------------------------\nTable List After Insertions:')
-    print(codd.get_tables(insepctor))
+    print(codd.get_tables(inspector))
 
 
 def main():

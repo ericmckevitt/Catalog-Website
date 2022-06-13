@@ -1,7 +1,7 @@
 from ssl import CertificateError
-from website import create_app
+import website
 
-app = create_app()
+app = website.create_app()
 
 # Only if run python file, not if imported
 if __name__ == '__main__':

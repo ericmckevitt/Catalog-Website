@@ -9,7 +9,7 @@ database = codd.database
 port = codd.port
 
 # Connect to codd
-dburi, insepctor = codd.connect(password)
+dburi, inspector = codd.connect(password)
 
 # Define table locations for convenience
 students_table = '../Schema/Students/Students.csv'
@@ -23,13 +23,13 @@ def drop_all_students():
     for student in students:
         codd.drop(student[1], dburi)
 
-    print('Tables:', codd.get_tables(insepctor))
+    print('Tables:', codd.get_tables(inspector))
 
 
 def load_all_students():
     # Print table list
     print('Original Table List:')
-    print(codd.get_tables(insepctor),
+    print(codd.get_tables(inspector),
           end='\n-----------------------------------\n')
     # Create tables and insert for each major
     for student in students:
@@ -45,7 +45,7 @@ def load_all_students():
 
     # Print table list
     print('-----------------------------------\nTable List After Insertions:')
-    print(codd.get_tables(insepctor))
+    print(codd.get_tables(inspector))
 
 
 def main():

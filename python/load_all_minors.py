@@ -9,7 +9,7 @@ database = codd.database
 port = codd.port
 
 # Connect to codd
-dburi, insepctor = codd.connect(password)
+dburi, inspector = codd.connect(password)
 
 # Define table locations for convenience
 csci_minor1 = '../Schema/Minors/CSCIMinor1.csv'
@@ -41,13 +41,13 @@ def drop_all_minors():
         except:
             print(f'Failed to drop {minors[1]}')
 
-    print('Tables:', codd.get_tables(insepctor))
+    print('Tables:', codd.get_tables(inspector))
 
 
 def load_all_minors():
     # Print table list
     print('Original Table List:')
-    print(codd.get_tables(insepctor),
+    print(codd.get_tables(inspector),
           end='\n-----------------------------------\n')
     # Create tables and insert for each major
     for minor in minors:
@@ -62,7 +62,7 @@ def load_all_minors():
 
     # Print table list
     print('-----------------------------------\nTable List After Insertions:')
-    print(codd.get_tables(insepctor))
+    print(codd.get_tables(inspector))
 
 
 def main():

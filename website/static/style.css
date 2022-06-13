@@ -71,6 +71,20 @@ span.x {
     margin-bottom: 18px;
 }
 
+.explore-major-form-section {
+    padding: 22px;
+    border-radius: 12px;
+    background-color: var(--very-light-blue);
+    margin-bottom: 18px;
+}
+
+.explore-track-form-section {
+    padding: 22px;
+    border-radius: 12px;
+    background-color: var(--very-light-blue);
+    margin-bottom: 18px;
+}
+
 .courses-section {
     padding: 22px;
     border-radius: 12px;

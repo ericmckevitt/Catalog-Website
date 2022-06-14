@@ -1,4 +1,4 @@
-from . import codd
+import codd
 
 
 # Collect credentials for user and server

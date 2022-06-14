@@ -65,6 +65,11 @@ def compute_degree_progress():
     print('percentage completion:', percent)
     return percent
 
+@views.route('/explore', methods=['GET', 'POST'])
+@login_required
+def explore():
+    return render_template("explore.html", user=current_user)
+
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required

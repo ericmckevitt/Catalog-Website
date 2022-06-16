@@ -1,26 +1,28 @@
 from matplotlib.contour import ContourSet
 from parso import parse
-from . import codd
 import numpy as np
+from azure_connect import AzureConnection
 
 # Collect credentials for user and server
-username = codd.username
-password = codd.getLoginCredentials()[1]
-server = codd.server
-database = codd.database
-port = codd.port
+# username = codd.username
+# password = codd.getLoginCredentials()[1]
+# server = codd.server
+# database = codd.database
+# port = codd.port
 
 # Connect to codd
-dburi, inspector = codd.connect(password)
+# dburi, inspector = codd.connect(password)
 
 # Pass in a department (Ex: CSCI) and get a list of classes
 
 
 def get_courses_by_department(dep):
+    az = AzureConnection()
     QUERY = f'''
     SELECT CONCAT(department, course_number) AS "courses" FROM {dep}_courses;
     '''
-    course_list = list(codd.read_query(QUERY, dburi)['courses'].values)
+    # course_list = list(codd.read_query(QUERY, dburi)['courses'].values)
+    course_list = list(az.execute(QUERY)['courses'].values)
     return course_list
 
 # Pass in a department and course number to get list of it's prereqs
@@ -34,7 +36,9 @@ def get_course_prereqs(dep, cn):
     '''
 
     # Stores the return data as a string, still need to process logic
-    prereqs = codd.read_query(QUERY, dburi)['prerequisites'].values[0]
+    # prereqs = codd.read_query(QUERY, dburi)['prerequisites'].values[0]
+    az = AzureConnection()
+    prereqs = az.execute(QUERY)['prerequisites'].values[0]
 
     # Split along &
     if prereqs is None:
@@ -64,7 +68,9 @@ def get_course_coreqs(dep, cn):
     '''
 
     # Stores the return data as a string, still need to process logic
-    coreqs = codd.read_query(QUERY, dburi)['corequisites'].values[0]
+    # coreqs = codd.read_query(QUERY, dburi)['corequisites'].values[0]
+    az = AzureConnection()
+    coreqs = az.execute(QUERY)['corequisites'].values[0]
 
     # Split along &
     if coreqs is None:
@@ -103,6 +109,8 @@ def parse_prereqs(prereqs):
 
 
 def get_course_info(dep, cn):
+    az = AzureConnection()
+
     # Gets name, semester hours, prereqs, coreqs
     prereqs = get_course_prereqs(dep, cn)
     coreqs = get_course_coreqs(dep, cn)
@@ -111,25 +119,21 @@ def get_course_info(dep, cn):
     QUERY = f'''
     SELECT course_title FROM all_courses WHERE CONCAT(department, course_number) = '{dep.upper()}{cn}';
     '''
-    name = codd.read_query(QUERY, dburi)['course_title'].values[0]
+    # name = codd.read_query(QUERY, dburi)['course_title'].values[0]
+    name = az.execute(QUERY)['course_title'].values[0]
 
     # Get course hours
     QUERY = f'''
     SELECT semester_hours FROM all_courses WHERE CONCAT(department, course_number) = '{dep.upper()}{cn}';
     '''
-    hours = codd.read_query(QUERY, dburi)['semester_hours'].values[0]
+    # hours = codd.read_query(QUERY, dburi)['semester_hours'].values[0]
+    hours = az.execute(QUERY)['semester_hours'].values[0]
 
     return name, dep, str(cn), hours, prereqs, coreqs
 
 
 def main():
-    # courses = get_courses_by_department('CSCI')
-    # print(courses)
-
-    prereqs = get_course_prereqs('csm', 101)
-    print(prereqs)
-    print()
-    parse_prereqs(prereqs)
+    pass
 
 
 if __name__ == "__main__":

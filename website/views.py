@@ -53,7 +53,7 @@ def compute_degree_progress():
     az = AzureConnection()
     # figure out how many credits are in the current major
     major = current_user.major
-    major = maj.major_map[major]
+    # major = maj.major_map[major]
     query = f"""
         SELECT SUM(credit_hours) FROM {major}_major;
     """

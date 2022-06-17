@@ -1,3 +1,5 @@
 {
-    "jupyter.jupyterServerType": "local"
+    "jupyter.jupyterServerType": "local",
+    "appService.defaultWebAppToDeploy": "/subscriptions/209d3734-8158-4d01-b097-f4141b2883a7/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/degree-compass",
+    "appService.deploySubpath": "."
 }

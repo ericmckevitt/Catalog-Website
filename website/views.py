@@ -6,8 +6,8 @@ from flask_login import login_required, current_user
 from .models import Course, Semester, User
 from . import db
 import json
-import python.codd as codd
-import python.load_all_majors as maj
+# import python.codd as codd
+from python.azure_connect import AzureConnection
 import python.process_courses as pc
 import python.schedule_validation as sv
 
@@ -50,20 +50,21 @@ def update_class_standing():
 
 
 def compute_degree_progress():
+    az = AzureConnection()
     # figure out how many credits are in the current major
     major = current_user.major
     major = maj.major_map[major]
     query = f"""
         SELECT SUM(credit_hours) FROM {major}_major;
     """
-    dburi, inspector = codd.connect('Mines6515')
-    major_credits = codd.read_query(query, dburi)
+    major_credits = az.execute(query)
     major_credits = major_credits['sum'].values[0]
     print(major_credits)
     user_credits = current_user.credits_taken
     percent = user_credits/major_credits * 100
     print('percentage completion:', percent)
     return percent
+
 
 @views.route('/explore', methods=['GET', 'POST'])
 @login_required
@@ -111,7 +112,7 @@ def home():
             print(semester_id)
 
             # Get a codd database connection
-            dburi, inspector = codd.connect('Mines6515')
+            # dburi, inspector = codd.connect('Mines6515')
 
             # Use codd to get course info
             # course_info = codd.get_course_info(department, course_number, dburi)
@@ -188,7 +189,7 @@ def account():
                 course_lookup = department + course_number
                 try:
                     # Look up course information from codd
-                    dburi, inspector = codd.connect('Mines6515')
+                    # dburi, inspector = codd.connect('Mines6515')
                     course_info = pc.get_course_info(
                         department, int(course_number.strip()))
 

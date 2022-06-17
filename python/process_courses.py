@@ -3,18 +3,6 @@ from parso import parse
 import numpy as np
 from azure_connect import AzureConnection
 
-# Collect credentials for user and server
-# username = codd.username
-# password = codd.getLoginCredentials()[1]
-# server = codd.server
-# database = codd.database
-# port = codd.port
-
-# Connect to codd
-# dburi, inspector = codd.connect(password)
-
-# Pass in a department (Ex: CSCI) and get a list of classes
-
 
 def get_courses_by_department(dep):
     az = AzureConnection()
